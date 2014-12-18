@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="jquery.min.js"></script>
+    <script src="../md5.js"></script>
+    <script src="../avatar.js"></script>
+    <script src="mocha.js"></script>
+    <script src="chai.js"></script>
+    <script src="sinon.js"></script>
+    <script>chai.should(); mocha.setup('bdd');</script>
+    <script src="avatar_spec.js"></script>
+    <script>mocha.run();</script>
+  </body>
+</html>
