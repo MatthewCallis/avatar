@@ -22,6 +22,8 @@ $('#avatar').avatar({
 
 This example will render an avatar with my initials "MC" as the image.
 
+![Avatar Example](https://raw.githubusercontent.com/MatthewCallis/avatar/master/example.png)
+
 ## Installation
 
 ```html
