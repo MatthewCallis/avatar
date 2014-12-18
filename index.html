@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Avatar by MatthewCallis</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Avatar</h1>
+        <p>Avatars for the people.</p>
+
+        <p class="view"><a href="https://github.com/MatthewCallis/avatar">View the Project on GitHub <small>MatthewCallis/avatar</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/MatthewCallis/avatar/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/MatthewCallis/avatar/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/MatthewCallis/avatar">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Avatar is a JavaScript library for showing Gravatars or generating user avatars.</p>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> avatar <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Avatar</span>(<span class="pl-s3">document</span>.<span class="pl-s3">getElementById</span>(<span class="pl-s1"><span class="pl-pds">'</span>avatar<span class="pl-pds">'</span></span>), {
+  <span class="pl-s1"><span class="pl-pds">'</span>useGravatar<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">false</span>,
+  <span class="pl-s1"><span class="pl-pds">'</span>initials<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>MC<span class="pl-pds">'</span></span>
+});
+
+<span class="pl-c">/* or */</span>
+
+$(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'</span></span>).avatar({
+  <span class="pl-s1"><span class="pl-pds">'</span>useGravatar<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">false</span>,
+  <span class="pl-s1"><span class="pl-pds">'</span>initials<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>MC<span class="pl-pds">'</span></span>
+});</pre></div>
+
+<p>This example will render an avatar with my initials "MC" in the image.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>md5.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>avatar.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<p>Avatar expects a <code>window.md5()</code> function to be defined in order to generate the hashes needed for Gravatar. One is provided as a sperate file if you would like to use your own or don't plan on using Gravatar.</p>
+
+<h2>
+<a id="running-tests" class="anchor" href="#running-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running Tests</h2>
+
+<p>To execute all unit tests, open <code>test/index.html</code> in your target browser.</p>
+
+<h2>
+<a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser Support</h2>
+
+<p>These are the browsers I have tested on personally:</p>
+
+<ul>
+<li>Chrome 41.0.2243.2 dev (64-bit)</li>
+<li>Firefox 34.0</li>
+<li>Safari 8.0.3 (10600.3.10.2)</li>
+</ul>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>Avatar is <a href="./LICENSE">MIT licensed</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/MatthewCallis">MatthewCallis</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-315321-9");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
