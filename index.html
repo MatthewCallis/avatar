@@ -11,16 +11,23 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script src="https://raw.githubusercontent.com/MatthewCallis/avatar/master/md5.js"></script>
+    <script src="https://raw.githubusercontent.com/MatthewCallis/avatar/master/md5.js"></script>
+    <style>
+    .pretty-avatar{
+      padding: 2px;
+      border: 2px solid #BA1E34;
+      border-radius: 100%;
+      box-shadow: 0 0 4px rgba(186, 30, 52, 0.5);
+    }
+    </style>
   </head>
   <body>
     <div class="wrapper">
       <header>
         <h1>Avatar</h1>
         <p>Avatars for the people.</p>
-
         <p class="view"><a href="https://github.com/MatthewCallis/avatar">View the Project on GitHub <small>MatthewCallis/avatar</small></a></p>
-
-
         <ul>
           <li><a href="https://github.com/MatthewCallis/avatar/zipball/master">Download <strong>ZIP File</strong></a></li>
           <li><a href="https://github.com/MatthewCallis/avatar/tarball/master">Download <strong>TAR Ball</strong></a></li>
@@ -46,6 +53,22 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
 });</pre></div>
 
 <p>This example will render an avatar with my initials "MC" in the image.</p>
+
+<div class="examples">
+  <img src="" alt="Gravatar" title="Gravatar" width="80" height="80" class="pretty-avatar" id="gravatar"/>
+  <img src="" alt="Initials" title="Initials" width="80" height="80" class="pretty-avatar" id="initials"/>
+  <script>
+  var gravatar = new Avatar(document.getElementById('gravatar'), {
+    'useGravatar': true,
+    'email': 'matthew@apptentive.com'
+  });
+
+  var initials = new Avatar(document.getElementById('initials'), {
+    'useGravatar': false,
+    'initials': 'MC'
+  });
+  </script>
+</div>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
