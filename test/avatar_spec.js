@@ -114,7 +114,6 @@
         avatar = new Avatar(image);
         defaults = {
           useGravatar: true,
-          useInitials: true,
           allowGravatarFallback: false,
           initials: '',
           initial_fg: '#888',
@@ -133,7 +132,6 @@
         };
         options = {
           useGravatar: false,
-          useInitials: false,
           allowGravatarFallback: true,
           initials: 'MDC',
           initial_fg: '#111',
@@ -158,7 +156,6 @@
       return it('should create an avatar with options', function() {
         $('#avatar-1').avatar({
           useGravatar: false,
-          useInitials: true,
           initials: 'MC'
         });
         return $('#avatar-1').attr('src').should.match(/^data:image\/png;base64,iV/);

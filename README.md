@@ -24,6 +24,32 @@ This example will render an avatar with my initials "MC" as the image.
 
 ![Avatar Example](https://raw.githubusercontent.com/MatthewCallis/avatar/master/example.png)
 
+### Options
+
+Avatar is highly customizable and most options are self explanitor:
+
+```coffeescript
+useGravatar: true # Allow Gravatars or not.
+fallbackImage: '' # URL or Data URI used when no initials are provided and not using Gravatars.
+
+# Initial Avatars Specific
+initials: ''  # Initials to be used.
+initial_fg: '#888888' # Text Color
+initial_bg: '#f4f6f7' # Background Color
+initial_size: null    # Text Size in pixels
+initial_weight: 100
+initial_font_family: "'Lato', 'Lato-Regular', 'Helvetica Neue'"
+
+# Gravatar Specific
+hash: null  # Precalculated MD5 string of an email address
+email: null # Email used for the Gravatar
+size: 80    # Size in pixels
+fallback: 'mm'               # Fallback Type
+rating: 'x'                  # Gravatar Rating
+forcedefault: false          # Force Gravatar Defaults
+allowGravatarFallback: false # Use Gravatars fallback, not fallbackImage
+```
+
 ## Installation
 
 ```html

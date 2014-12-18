@@ -131,7 +131,6 @@ describe "Avatar", ->
 
       defaults =
         useGravatar: true
-        useInitials: true
         allowGravatarFallback: false
         initials: ''
         initial_fg: '#888'
@@ -150,7 +149,6 @@ describe "Avatar", ->
 
       options =
         useGravatar: false
-        useInitials: false
         allowGravatarFallback: true
         initials: 'MDC'
         initial_fg: '#111'
@@ -174,7 +172,6 @@ describe "Avatar", ->
     it 'should create an avatar with options', ->
       $('#avatar-1').avatar
         useGravatar: false
-        useInitials: true
         initials: 'MC'
       # Use match because this will very depending on `window.devicePixelRatio`
       $('#avatar-1').attr('src').should.match(/^data:image\/png;base64,iV/)
