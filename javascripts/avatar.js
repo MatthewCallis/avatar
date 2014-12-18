@@ -7,7 +7,6 @@
 
     defaults = {
       useGravatar: true,
-      useInitials: true,
       allowGravatarFallback: false,
       initials: '',
       initial_fg: '#888888',
