@@ -20,7 +20,7 @@ $('#avatar').avatar({
 });
 ```
 
-This example will render an avatar with my initials "MC" in the image.
+This example will render an avatar with my initials "MC" as the image.
 
 ## Installation
 
@@ -39,9 +39,16 @@ To execute all unit tests, open `test/index.html` in your target browser.
 
 These are the browsers I have tested on personally:
 
-* Chrome 41.0.2243.2 dev (64-bit)
-* Firefox 34.0
-* Safari 8.0.3 (10600.3.10.2)
+* OS X 10.10.2 - Chrome 41.0.2243.2 dev (64-bit)
+* OS X 10.10.2 - Firefox 34.0
+* OS X 10.10.2 - Safari 8.0.3 (10600.3.10.2)
+* iOS 8.1.2 - Safari 8
+* iOS 8.1.2 - Chrome 39
+
+## Thanks
+
+Pretty styles and design support kindly provided by @andrewcrocker.
+Built with love at @Apptentive.
 
 ### License
 
