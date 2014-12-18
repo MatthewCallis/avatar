@@ -46,6 +46,7 @@ These are the browsers I have tested on personally:
 * OS X 10.10.2 - Safari 8.0.3 (10600.3.10.2)
 * iOS 8.1.2 - Safari 8
 * iOS 8.1.2 - Chrome 39
+* Microsoft Remote Desktop - Internet Explorer 11 (11.0.9879.0)
 
 ## Thanks
 
