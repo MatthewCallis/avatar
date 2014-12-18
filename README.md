@@ -26,7 +26,7 @@ This example will render an avatar with my initials "MC" as the image.
 
 ### Options
 
-Avatar is highly customizable and most options are self explanitor:
+Avatar is highly customizable and most options are self explanatory:
 
 ```coffeescript
 useGravatar: true # Allow Gravatars or not.
