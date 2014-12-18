@@ -47,8 +47,8 @@ These are the browsers I have tested on personally:
 
 ## Thanks
 
-Pretty styles and design support kindly provided by @andrewcrocker.
-Built with love at @Apptentive.
+Pretty styles and design support kindly provided by [Andrew Crocker](https://github.com/andrewcrocker).
+Built with love at [Apptentive](https://github.com/apptentive).
 
 ### License
 
