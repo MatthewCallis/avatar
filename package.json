@@ -1,0 +1,30 @@
+{
+  "name": "avatar-initials",
+  "version": "1.0.0",
+  "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
+  "author": "Matthew Callis <Matthew Callis>",
+  "contributors": [
+    {
+      "name": "Matthew Callis",
+      "email": "Matthew Callis"
+    }
+  ],
+  "main": "avatar.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MatthewCallis/avatar"
+  },
+  "bugs": {
+    "url": "https://github.com/MatthewCallis/avatar/issues"
+  },
+  "keywords": [
+    "avatar",
+    "gravatar",
+    "initials"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "preferGlobal": false,
+  "private": false,
+  "license": "MIT"
+}
