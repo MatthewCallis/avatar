@@ -26,5 +26,9 @@
   "devDependencies": {},
   "preferGlobal": false,
   "private": false,
-  "license": "MIT"
+  "license": "MIT",
+  "jam": {
+    "dependencies": {}
+  },
+  "github": "https://github.com/MatthewCallis/avatar"
 }

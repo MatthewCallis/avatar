@@ -79,6 +79,16 @@ These are the browsers I have tested on personally:
 Pretty styles and design support kindly provided by [Andrew Crocker](https://github.com/andrewcrocker).
 Built with love at [Apptentive](https://github.com/apptentive).
 
+## Package Managers
+
+There are a lot of these and keeping up with them is hard, so here's a list:
+
+* [npm](https://www.npmjs.com/) - [avatar-initials](https://www.npmjs.com/package/avatar-initials) - `package.json`
+* [bower](http://bower.io/) - `bower.json`
+* [jQuery Plugins](http://plugins.jquery.com/) - `avatar.jquery.json`
+* [Jam](http://jamjs.org/) - [avatar-initials](http://jamjs.org/packages/#/details/avatar-initials) - `package.json`
+* [Duo](http://duojs.org/) - `component.json`
+
 ### License
 
 Avatar is [MIT licensed](./LICENSE).
