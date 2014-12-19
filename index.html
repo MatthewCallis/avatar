@@ -24,7 +24,7 @@
   margin-bottom: 20px;
 }
 .avatar-examples img{
-  margin-right: 20px;
+  margin-right: 10px;
 }
 </style>
 </head>
@@ -64,6 +64,8 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
 <div class="avatar-examples">
   <img src="" alt="Gravatar" title="Gravatar" width="80" height="80" class="pretty-avatar" id="gravatar"/>
   <img src="" alt="Initials" title="Initials" width="80" height="80" class="pretty-avatar" id="initials"/>
+  <img src="" alt="SVG" title="SVG" width="80" height="80" class="pretty-avatar" id="svg"/>
+  <img src="" alt="Kitten" title="Kitten" width="80" height="80" class="pretty-avatar" id="kitten"/>
   <script>
   var gravatar = new Avatar(document.getElementById('gravatar'), {
     'useGravatar': true,
@@ -75,6 +77,15 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
     'useGravatar': false,
     'initials': 'MC'
   });
+
+  var kitten = new Avatar(document.getElementById('kitten'), {
+    'useGravatar': false,
+    'fallbackImage': 'http://placekitten.com/g/80/80'
+  });
+
+  var svg = new Avatar(document.getElementById('svg'), {
+    'useGravatar': false
+  });
   </script>
 </div>
 
@@ -82,6 +93,8 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
 <div class="avatar-examples">
   <img src="" alt="Gravatar" title="Gravatar" width="80" height="80" id="gravatar-raw"/>
   <img src="" alt="Initials" title="Initials" width="80" height="80" id="initials-raw"/>
+  <img src="" alt="SVG" title="SVG" width="80" height="80" class="pretty-avatar" id="svg-raw"/>
+  <img src="" alt="Kitten" title="Kitten" width="80" height="80" class="pretty-avatar" id="kitten-raw"/>
   <script>
   var gravatar_raw = new Avatar(document.getElementById('gravatar-raw'), {
     'useGravatar': true,
@@ -92,6 +105,15 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
   var initials_raw = new Avatar(document.getElementById('initials-raw'), {
     'useGravatar': false,
     'initials': 'MC'
+  });
+
+  var kitten_raw = new Avatar(document.getElementById('kitten-raw'), {
+    'useGravatar': false,
+    'fallbackImage': 'http://placekitten.com/g/80/80'
+  });
+
+  var svg_raw = new Avatar(document.getElementById('svg-raw'), {
+    'useGravatar': false
   });
   </script>
 </div>
