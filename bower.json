@@ -17,6 +17,10 @@
     "initials"
   ],
   "license": "MIT",
+  "main": [
+    "./avatar.js",
+    "./md5.js"
+  ],
   "ignore": [
     "**/.*",
     "node_modules",
