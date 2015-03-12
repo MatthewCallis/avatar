@@ -29,7 +29,6 @@
   "dependencies": {},
   "devDependencies": {
     "MD5": "*",
-    "canvas": "*",
     "chai": "*",
     "chai-as-promised": "*",
     "codeclimate-test-reporter": "*",
