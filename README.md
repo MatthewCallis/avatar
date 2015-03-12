@@ -1,5 +1,11 @@
 # [Avatar](http://matthewcallis.github.io/avatar/)
 
+[![Build Status](https://travis-ci.org/MatthewCallis/avatar.svg)](https://travis-ci.org/MatthewCallis/avatar)
+[![Dependency Status](https://david-dm.org/MatthewCallis/avatar.svg)](https://david-dm.org/MatthewCallis/avatar)
+[![devDependency Status](https://david-dm.org/MatthewCallis/avatar/dev-status.svg?style=flat)](https://david-dm.org/MatthewCallis/avatar#info=devDependencies)
+[![Test Coverage](https://codeclimate.com/github/MatthewCallis/avatar/badges/coverage.svg)](https://codeclimate.com/github/MatthewCallis/avatar)
+[![Coverage Status](https://coveralls.io/repos/MatthewCallis/avatar/badge.svg?branch=master)](https://coveralls.io/r/MatthewCallis/avatar?branch=master)
+
 Avatar is a JavaScript library for showing Gravatars or generating user avatars.
 
 ## Examples
@@ -48,6 +54,19 @@ fallback: 'mm'               # Fallback Type
 rating: 'x'                  # Gravatar Rating
 forcedefault: false          # Force Gravatar Defaults
 allowGravatarFallback: false # Use Gravatars fallback, not fallbackImage
+
+# GitHub Specific
+github_id: null  # GitHub User ID.
+
+# Avatars.io Specific
+use_avatars_io: false # Enable Avatars.io Support
+avatars_io:
+  user_id: null       # Avatars.io User ID
+  identifier: null    # Avatars.io Avatar Identifier
+  twitter: null       # Twitter ID or Username
+  facebook: null      # Facebook ID or Username
+  instagram: null     # Instagram ID or Username
+  size: 'medium'      # Size: small, medium, large
 ```
 
 ## Installation
@@ -57,7 +76,7 @@ allowGravatarFallback: false # Use Gravatars fallback, not fallbackImage
 <script src="avatar.js"></script>
 ```
 
-Avatar expects a `window.md5()` function to be defined in order to generate the hashes needed for Gravatar. One is provided as a sperate file if you would like to use your own or don't plan on using Gravatar.
+Avatar expects a `window.md5()` function to be defined in order to generate the hashes needed for Gravatar. One is provided as a seperate file if you would like to use your own or don't plan on using Gravatar.
 
 ## Running Tests
 

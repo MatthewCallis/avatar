@@ -8,14 +8,27 @@
   </head>
   <body>
     <div id="mocha"></div>
-    <script src="jquery.min.js"></script>
-    <script src="../md5.js"></script>
-    <script src="../avatar.js"></script>
-    <script src="mocha.js"></script>
-    <script src="chai.js"></script>
-    <script src="sinon.js"></script>
-    <script>chai.should(); mocha.setup('bdd');</script>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../vendor/md5.js"></script>
+    <script src="../build/avatar.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/chai-as-promised/lib/chai-as-promised.js"></script>
+    <script src="../node_modules/sinon-chai/lib/sinon-chai.js"></script>
+    <script src="../node_modules/sinon/pkg/sinon.js"></script>
+    <script src="../build-coverage/avatar.js"></script>
+    <script>
+    var expect = chai.expect;
+    var should = chai.should();
+    mocha.setup('bdd');</script>
     <script src="avatar_spec.js"></script>
-    <script>mocha.run();</script>
+    <script>
+    if (window.mochaPhantomJS) {
+      mochaPhantomJS.run()
+    }
+    else {
+      mocha.run();
+    }
+    </script>
   </body>
 </html>

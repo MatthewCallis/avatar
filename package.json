@@ -1,6 +1,6 @@
 {
   "name": "avatar-initials",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
   "author": "Matthew Callis <Matthew Callis>",
   "contributors": [
@@ -9,7 +9,10 @@
       "email": "Matthew Callis"
     }
   ],
-  "main": "avatar.js",
+  "main": [
+    "./build/avatar.js",
+    "./vendor/md5.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/MatthewCallis/avatar"
@@ -20,15 +23,42 @@
   "keywords": [
     "avatar",
     "gravatar",
-    "initials"
+    "initials",
+    "profile photo"
   ],
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "MD5": "*",
+    "canvas": "*",
+    "chai": "*",
+    "chai-as-promised": "*",
+    "codeclimate-test-reporter": "*",
+    "coffee-script": "*",
+    "coveralls": "*",
+    "jquery": "^2",
+    "jsdom": "*",
+    "mocha": "*",
+    "mocha-istanbul": "*",
+    "mocha-jsdom": "*",
+    "mocha-lcov-reporter": "*",
+    "mocha-phantomjs": "^3.5.3",
+    "sinon": "*",
+    "sinon-chai": "*"
+  },
   "preferGlobal": false,
   "private": false,
   "license": "MIT",
   "jam": {
     "dependencies": {}
+  },
+  "scripts": {
+    "instrument": "istanbul instrument --output build-coverage build/",
+    "coverage":   "istanbul instrument --output build-coverage build/ && istanbul cover _mocha -- test/*_spec.js -R spec",
+    "coverage-report": "istanbul report --root coverage lcov",
+    "lint": "coffeelint src/*.coffee",
+    "make": "coffee --compile --output build/ src/*",
+    "test": "coffee --compile --output test/ test/*.coffee && ./node_modules/mocha/bin/mocha --globals md5",
+    "test-phantomjs": "mocha-phantomjs --setting localToRemoteUrlAccessEnabled=true --setting webSecurityEnabled=false test/index.html --hooks ./phantom_hooks.js --timeout 25000"
   },
   "github": "https://github.com/MatthewCallis/avatar"
 }

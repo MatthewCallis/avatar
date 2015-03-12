@@ -1,7 +1,7 @@
 {
     "name": "avatar",
     "title": "Avatar",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
     "keywords": [
         "image",

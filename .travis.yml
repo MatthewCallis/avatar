@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - 0.12
+  - iojs
+env:
+  - CODECLIMATE_REPO_TOKEN=f2d05b465bf33005b30bb94efa83b9232d2ade570a493de719cf948b2f030332
+before_install:
+  - npm conf set strict-ssl false
+after_install:
+  - sudo npm install -g phantomjs
+before_script:
+  - phantomjs --version
+  - npm install -g mocha
+  - npm install -g istanbul
+  - npm install -g codeclimate-test-reporter
+  - npm install
+script:
+  - npm run instrument
+  - npm run test-phantomjs
+after_script:
+  - cat coverage/lcov.info | codeclimate
+  - cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+addons:
+  code_climate:
+    repo_token: f2d05b465bf33005b30bb94efa83b9232d2ade570a493de719cf948b2f030332

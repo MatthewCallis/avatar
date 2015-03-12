@@ -1,7 +1,6 @@
 {
   "name": "avatar",
-  "main": "avatar.js",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "homepage": "https://github.com/MatthewCallis/avatar",
   "authors": [
     "Matthew Callis <matthew.callis@gmail.com>"
@@ -18,8 +17,8 @@
   ],
   "license": "MIT",
   "main": [
-    "./avatar.js",
-    "./md5.js"
+    "./build/avatar.js",
+    "./vendor/md5.js"
   ],
   "ignore": [
     "**/.*",
