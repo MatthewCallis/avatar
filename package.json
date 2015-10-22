@@ -24,7 +24,7 @@
     "avatar",
     "gravatar",
     "initials",
-    "profile photo",
+    "profile photo"
   ],
   "dependencies": {},
   "devDependencies": {
@@ -40,7 +40,7 @@
     "mocha-istanbul": "*",
     "mocha-jsdom": "*",
     "mocha-lcov-reporter": "*",
-    "mocha-phantomjs": "^3.5.3",
+    "mocha-phantomjs": "^4.0.1",
     "sinon": "*",
     "sinon-chai": "*"
   },
