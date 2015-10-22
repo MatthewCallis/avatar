@@ -1,6 +1,6 @@
 {
   "name": "avatar-initials",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
   "author": "Matthew Callis <matthew.callis@gmail.com>",
   "contributors": [
@@ -53,7 +53,7 @@
   "scripts": {
     "instrument": "istanbul instrument --output build-coverage build/",
     "compile-tests": "coffee --compile --output test/ test/",
-    "coverage":   "istanbul instrument --output build-coverage build/ && istanbul cover _mocha -- test/*_spec.js -R spec",
+    "coverage": "istanbul instrument --output build-coverage build/ && istanbul cover _mocha -- test/*_spec.js -R spec",
     "coverage-report": "istanbul report --root coverage lcov",
     "lint": "coffeelint src/*.coffee",
     "make": "coffee --compile --output build/ src/*.coffee",
