@@ -1,7 +1,7 @@
 class Avatar {
 
   constructor (element, options = {}) {
-    if (element == null) {
+    if (element === null) {
       throw new Error('No image element provided.');
     }
 
@@ -39,7 +39,7 @@ class Avatar {
       this.setSource(this.gravatarUrl(this.settings));
     } else if (this.settings.useGravatar) {
       this.gravatarValid(this.settings);
-    } else if (this.settings.use_avatars_io && ((this.settings.avatars_io.user_id != null) || (this.settings.avatars_io.twitter != null) || (this.settings.avatars_io.facebook != null) || (this.settings.avatars_io.instagram != null))) {
+    } else if (this.settings.use_avatars_io && ((this.settings.avatars_io.user_id !== null) || (this.settings.avatars_io.twitter != null) || (this.settings.avatars_io.facebook != null) || (this.settings.avatars_io.instagram != null))) {
       this.setSource(this.avatarsioAvatar(this.settings));
     } else if (this.settings.github_id) {
       this.setSource(this.githubAvatar(this.settings));
@@ -50,7 +50,7 @@ class Avatar {
     }
   }
 
-  setSource = function(source) {
+  setSource (source) {
     if (source) {
       this.element.src = source;
     }
@@ -62,8 +62,8 @@ class Avatar {
       return;
     }
     let context = canvas.getContext('2d');
-    let width = this.element.width;
-    let height = this.element.height;
+    let width = this.element.width || options.size;
+    let height = this.element.height || options.size;
     canvas.width = width * window.devicePixelRatio;
     canvas.height = height * window.devicePixelRatio;
     canvas.style.width = width + "px";

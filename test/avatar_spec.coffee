@@ -370,6 +370,24 @@ describe "Avatar", ->
       return
     return
 
+  describe 'Issue #5', ->
+    # The image was hidden with no size information, we must pass in a size in this case.
+    it 'should build the image data for a hidden image', ->
+      options =
+        useGravatar: false
+        initials: "f"
+        initial_bg: "#FF5C45"
+        initial_fg: "white"
+        size: 80
+
+      $('#avatar-1').removeAttr('height')
+      $('#avatar-1').removeAttr('width')
+      $('#avatar-1').hide()
+      avatar = new Avatar(image, options)
+      # Direct match is tricky across browsers.
+      # image.src.should.equal 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAACQElEQVR4Xu3aPUhVcQCG8efmYlIUQkPg0NbU3BAYfdgXgksNQSghRaINRZBkEERLg0OOTU5OLa2Fi9XS0NTcYElChTQVVN443UFsEc577uU/PM4+5/r/nffq1WurfWWkjR+1BVoC1rb7FwqY+QkY+gkoYCoQ9n4PFDAUCHMXKGAoEOYuUMBQIMxdoIChQJi7QAFDgTB3gQKGAmHuAgUMBcLcBQoYCoS5CxQwFAhzFyhgKBDm5S/w0lU4dhr2D3aOuvkHPn+Euanw6M3kZQPen4fDR2D1A7xdge8bMHQIBg/AwsNmBMKrlAs4Pg0jY/B8CZ4thsfsXl4mYP9ueLIE65/gwc3unb6BK5cJeHQYpu/B03l4/bKBY3bvEmUCHj8H1VN47gasr3Xv9A1cuUzAyVswfBbuTgpY6yaPz8CpUQFr4VVRBXjiPNyegI2vtS/Ti7Ccp/DEDPQPwO9fcHCo8/rv1Quo/gF5V2u7xft38Ga5Fz47PkYZgNXLljuPtn7bGNgDe/fBty/Q3tx+iL4+WFuFx7M7Hq4Xn1AG4P8nvXwdzozB1EX4+aMXDrUfo0xAf4jUvqGdUEABQ4Ewd4EChgJh7gIFDAXC3AUKGAqEuQsUMBQIcxcoYCgQ5i5QwFAgzF1gA4AnL8DsNd+VCymLz8v8i3TxbFtfoIDhzRJQwFAgzF2ggKFAmLtAAUOBMHeBAoYCYe4CBQwFwtwFChgKhLkLFDAUCHMXKGAoEOYuUMBQIMxdoIChQJi7QAFDgTD/C7dCVRBrYrI8AAAAAElFTkSuQmCC'
+      image.src.length.should.be.at.least(24)
+
   if window? and window.md5?
     old_md5 = window.md5
 

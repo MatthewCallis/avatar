@@ -3,3 +3,4 @@ node_modules/
 .coveralls.yml
 coverage/
 build-coverage
+npm-debug.log

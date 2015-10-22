@@ -2,7 +2,7 @@
   "name": "avatar-initials",
   "version": "1.2.0",
   "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
-  "author": "Matthew Callis <Matthew Callis>",
+  "author": "Matthew Callis <matthew.callis@gmail.com>",
   "contributors": [
     {
       "name": "Matthew Callis",
@@ -40,7 +40,7 @@
     "mocha-istanbul": "*",
     "mocha-jsdom": "*",
     "mocha-lcov-reporter": "*",
-    "mocha-phantomjs": "^4.0.1",
+    "mocha-phantomjs": "^3.5.3",
     "sinon": "*",
     "sinon-chai": "*"
   },
@@ -56,7 +56,7 @@
     "coverage":   "istanbul instrument --output build-coverage build/ && istanbul cover _mocha -- test/*_spec.js -R spec",
     "coverage-report": "istanbul report --root coverage lcov",
     "lint": "coffeelint src/*.coffee",
-    "make": "coffee --compile --output build/ src/*",
+    "make": "coffee --compile --output build/ src/*.coffee",
     "test": "coffee --compile --output test/ test/*.coffee && ./node_modules/mocha/bin/mocha --globals md5",
     "test-phantomjs": "mocha-phantomjs --setting localToRemoteUrlAccessEnabled=true --setting webSecurityEnabled=false test/index.html --hooks ./phantom_hooks.js --timeout 25000"
   },

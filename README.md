@@ -37,6 +37,7 @@ Avatar is highly customizable and most options are self explanatory:
 ```coffeescript
 useGravatar: true # Allow Gravatars or not.
 fallbackImage: '' # URL or Data URI used when no initials are provided and not using Gravatars.
+size: 80          # Size in pixels, fallback for hidden images and Gravatar
 
 # Initial Avatars Specific
 initials: ''  # Initials to be used.
@@ -49,7 +50,6 @@ initial_font_family: "'Lato', 'Lato-Regular', 'Helvetica Neue'"
 # Gravatar Specific
 hash: null  # Precalculated MD5 string of an email address
 email: null # Email used for the Gravatar
-size: 80    # Size in pixels
 fallback: 'mm'               # Fallback Type
 rating: 'x'                  # Gravatar Rating
 forcedefault: false          # Force Gravatar Defaults
@@ -86,12 +86,21 @@ To execute all unit tests, open `test/index.html` in your target browser.
 
 These are the browsers I have tested on personally:
 
+### v1.2.0
+
 * OS X 10.10.2 - Chrome 41.0.2243.2 dev (64-bit)
 * OS X 10.10.2 - Firefox 34.0
 * OS X 10.10.2 - Safari 8.0.3 (10600.3.10.2)
 * iOS 8.1.2 - Safari 8
 * iOS 8.1.2 - Chrome 39
 * Microsoft Remote Desktop - Internet Explorer 11 (11.0.9879.0)
+
+### v1.3.0
+
+* OS X 10.10.2 - Chrome 48.0.2541.0 dev (64-bit)
+* OS X 10.10.2 - Firefox 41.0.2
+* OS X 10.10.2 - Safari 9.0 (11601.1.56)
+
 
 ## Thanks
 

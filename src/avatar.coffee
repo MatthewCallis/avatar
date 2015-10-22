@@ -54,8 +54,8 @@ class Avatar
     canvas = document.createElement('canvas')
     return  unless canvas.getContext and canvas.getContext('2d')
     context = canvas.getContext('2d')
-    width = @element.width
-    height = @element.height
+    width = @element.width or options.size
+    height = @element.height or options.size
     x = width / 2
     y = height / 2
     font_size = options.initial_size or height / 2
