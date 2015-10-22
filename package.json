@@ -58,7 +58,7 @@
     "lint": "coffeelint src/*.coffee",
     "make": "coffee --compile --output build/ src/*.coffee",
     "test": "coffee --compile --output test/ test/*.coffee && ./node_modules/mocha/bin/mocha --globals md5",
-    "test-phantomjs": "mocha-phantomjs --setting localToRemoteUrlAccessEnabled=true --setting webSecurityEnabled=false test/index.html --hooks ./phantom_hooks.js --timeout 25000"
+    "test-phantomjs": "mocha-phantomjs --setting localToRemoteUrlAccessEnabled=true --ssl-protocol=any --setting webSecurityEnabled=false test/index.html --hooks ./phantom_hooks.js --timeout 25000"
   },
   "github": "https://github.com/MatthewCallis/avatar"
 }
