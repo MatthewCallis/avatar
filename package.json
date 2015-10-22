@@ -9,8 +9,8 @@
       "email": "matthew.callis@gmail.com"
     }
   ],
-  "main": [
-    "./build/avatar.js",
+  "main": "./build/avatar.js",
+  files: [
     "./vendor/md5.js"
   ],
   "repository": {
