@@ -10,7 +10,7 @@
     }
   ],
   "main": "./build/avatar.js",
-  files: [
+  "files": [
     "./vendor/md5.js"
   ],
   "repository": {
