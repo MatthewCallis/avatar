@@ -6,7 +6,7 @@
   "contributors": [
     {
       "name": "Matthew Callis",
-      "email": "Matthew Callis"
+      "email": "matthew.callis@gmail.com"
     }
   ],
   "main": [
@@ -24,7 +24,7 @@
     "avatar",
     "gravatar",
     "initials",
-    "profile photo"
+    "profile photo",
   ],
   "dependencies": {},
   "devDependencies": {
@@ -52,6 +52,7 @@
   },
   "scripts": {
     "instrument": "istanbul instrument --output build-coverage build/",
+    "compile-tests": "coffee --compile --output test/ test/",
     "coverage":   "istanbul instrument --output build-coverage build/ && istanbul cover _mocha -- test/*_spec.js -R spec",
     "coverage-report": "istanbul report --root coverage lcov",
     "lint": "coffeelint src/*.coffee",
