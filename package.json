@@ -56,7 +56,7 @@
     "mocha-istanbul": "*",
     "mocha-jsdom": "*",
     "mocha-lcov-reporter": "*",
-    "mocha-phantomjs": "^3.5.3",
+    "mocha-phantomjs": "^4.0.2",
     "npm-bump": "0.0.15",
     "sinon": "*",
     "sinon-chai": "*"
