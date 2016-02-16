@@ -9,9 +9,9 @@
       "email": "matthew.callis@gmail.com"
     }
   ],
-  "main": "./build/avatar.js",
+  "main": "build/avatar.js",
   "files": [
-    "./vendor/md5.js"
+    "vendor/md5.js"
   ],
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "mocha-jsdom": "*",
     "mocha-lcov-reporter": "*",
     "mocha-phantomjs": "^3.5.3",
+    "npm-bump": "0.0.15",
     "sinon": "*",
     "sinon-chai": "*"
   },

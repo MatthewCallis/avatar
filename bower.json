@@ -17,8 +17,8 @@
   ],
   "license": "MIT",
   "main": [
-    "./build/avatar.js",
-    "./vendor/md5.js"
+    "build/avatar.js",
+    "vendor/md5.js"
   ],
   "ignore": [
     "**/.*",

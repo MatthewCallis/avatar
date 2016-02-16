@@ -4,6 +4,6 @@
   "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
   "version": "1.3.0",
   "keywords": ["image", "avatar", "gravatar", "initials"],
-  "scripts": ["./build/avatar.js"],
+  "scripts": ["build/avatar.js"],
   "license": "MIT"
 }
