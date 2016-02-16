@@ -9,14 +9,28 @@
       "email": "matthew.callis@gmail.com"
     }
   ],
+  "maintainers":[ {
+    "name": "Matthew Callis",
+    "email": "matthew.callis@gmail.com",
+    "web": "http://matthewcallis.github.io/avatar/"
+  }],
   "main": "build/avatar.js",
   "files": [
+    "build/avatar.js",
     "vendor/md5.js"
   ],
+  "homepage": "http://matthewcallis.github.io/avatar/",
   "repository": {
     "type": "git",
     "url": "https://github.com/MatthewCallis/avatar"
   },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/MatthewCallis/avatar",
+      "path": "MatthewCallis/avatar"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/MatthewCallis/avatar/issues"
   },
@@ -45,9 +59,16 @@
     "sinon": "*",
     "sinon-chai": "*"
   },
+  "directories": {},
   "preferGlobal": false,
   "private": false,
   "license": "MIT",
+  "licenses": [
+     {
+         "type": "MIT",
+         "url": "https://opensource.org/licenses/MIT"
+     }
+  ],
   "jam": {
     "dependencies": {}
   },
