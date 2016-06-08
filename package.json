@@ -26,13 +26,11 @@
     "type": "git",
     "url": "https://github.com/MatthewCallis/avatar"
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/MatthewCallis/avatar",
-      "path": "MatthewCallis/avatar"
-    }
-  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MatthewCallis/avatar",
+    "path": "MatthewCallis/avatar"
+  },
   "bugs": {
     "url": "https://github.com/MatthewCallis/avatar/issues"
   },
@@ -44,22 +42,22 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "MD5": "*",
-    "chai": "*",
     "chai-as-promised": "*",
+    "chai": "*",
     "codeclimate-test-reporter": "*",
     "coffee-script": "*",
     "coveralls": "*",
     "jquery": "^2",
     "jsdom": "*",
-    "mocha": "*",
+    "md5": "*",
     "mocha-istanbul": "*",
     "mocha-jsdom": "*",
     "mocha-lcov-reporter": "*",
-    "mocha-phantomjs": "^4.0.2",
-    "npm-bump": "0.0.15",
-    "sinon": "*",
-    "sinon-chai": "*"
+    "mocha-phantomjs": "*",
+    "mocha": "*",
+    "npm-bump": "*",
+    "sinon-chai": "*",
+    "sinon": "*"
   },
   "directories": {},
   "preferGlobal": false,
