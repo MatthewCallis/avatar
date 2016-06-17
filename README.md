@@ -5,6 +5,7 @@
 [![devDependency Status](https://david-dm.org/MatthewCallis/avatar/dev-status.svg?style=flat)](https://david-dm.org/MatthewCallis/avatar#info=devDependencies)
 [![Test Coverage](https://codeclimate.com/github/MatthewCallis/avatar/badges/coverage.svg)](https://codeclimate.com/github/MatthewCallis/avatar)
 [![Coverage Status](https://coveralls.io/repos/MatthewCallis/avatar/badge.svg)](https://coveralls.io/r/MatthewCallis/avatar)
+[![bitHound Overall Score](https://www.bithound.io/github/MatthewCallis/avatar/badges/score.svg)](https://www.bithound.io/github/MatthewCallis/avatar)
 
 Avatar is a JavaScript library for showing Gravatars or generating user avatars.
 

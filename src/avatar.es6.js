@@ -39,7 +39,7 @@ class Avatar {
       this.setSource(this.gravatarUrl(this.settings));
     } else if (this.settings.useGravatar) {
       this.gravatarValid(this.settings);
-    } else if (this.settings.use_avatars_io && ((this.settings.avatars_io.user_id !== null) || (this.settings.avatars_io.twitter != null) || (this.settings.avatars_io.facebook != null) || (this.settings.avatars_io.instagram != null))) {
+    } else if (this.settings.use_avatars_io && ((this.settings.avatars_io.user_id !== null) || (this.settings.avatars_io.twitter !== null) || (this.settings.avatars_io.facebook !== null) || (this.settings.avatars_io.instagram !== null))) {
       this.setSource(this.avatarsioAvatar(this.settings));
     } else if (this.settings.github_id) {
       this.setSource(this.githubAvatar(this.settings));
@@ -54,7 +54,7 @@ class Avatar {
     if (source) {
       this.element.src = source;
     }
-  };
+  }
 
   initialAvatar (options) {
     let canvas = document.createElement('canvas');
@@ -78,14 +78,14 @@ class Avatar {
     context.fillStyle = this.settings.initial_fg;
     context.fillText(this.settings.initials, (width / 2), (height / 2));
     return canvas.toDataURL('image/png');
-  };
+  }
 
   githubAvatar () {
     let cdn_min = 0;
     let cdn_max = 3;
     let cdn = Math.floor(Math.random() * (cdn_max - cdn_min + 1)) + cdn_min;
     return `https://avatars${cdn}.githubusercontent.com/u/${this.settings.github_id}"?v=3&s=${this.settings.size}`;
-  };
+  }
 
   avatarsioAvatar () {
     let avatars_io_url = 'http://avatars.io/';
@@ -100,7 +100,7 @@ class Avatar {
     }
     avatars_io_url += "?size=" + this.settings.avatars_io.size;
     return avatars_io_url;
-  };
+  }
 
   gravatarUrl (options) {
     let size = (this.settings.size >= 1 && this.settings.size <= 2048 ? this.settings.size : 80);
@@ -117,7 +117,7 @@ class Avatar {
       "&r=" + this.settings.rating,
       (this.settings.forcedefault ? '&f=y' : '')
     ].join('');
-  };
+  }
 
   gravatarValid () {
     if (!(this.settings.email || this.settings.hash)) {
@@ -134,11 +134,11 @@ class Avatar {
     image.onload = this.gravatarValidOnLoad;
     image.onerror = this.gravatarValidOnError;
     image.src = image_source;
-  };
+  }
 
   gravatarValidOnLoad () {
     return this.setSource(this.gravatarUrl(this.settings));
-  };
+  }
 
   gravatarValidOnError () {
     if (this.settings.initials.length > 0) {
@@ -146,7 +146,7 @@ class Avatar {
     } else {
       return this.setSource(this.settings.fallbackImage);
     }
-  };
+  }
 
   merge (input, options) {
     let output = JSON.parse(JSON.stringify(input));
@@ -155,7 +155,7 @@ class Avatar {
       output[k] = v;
     }
     return output;
-  };
+  }
 
   md5 (string) {
     if (typeof md5 === 'function') {
@@ -163,7 +163,7 @@ class Avatar {
     } else {
       return '00000000000000000000000000000000';
     }
-  };
+  }
 }
 
 (typeof exports !== "undefined" && exports !== null ? exports : window).Avatar = Avatar;
