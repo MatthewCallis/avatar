@@ -1,0 +1,28 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+    "mocha"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "mocha": true,
+  },
+  "globals": {
+    "sinon": false,
+    "mocha": true,
+    "expect": true,
+  },
+  # Custom Disabled Rules
+  rules: {
+    camelcase: 0,
+    max-len: 0,
+    no-param-reassign: 0,
+    no-unused-vars: ["error", { "varsIgnorePattern": "^(_|Apptentive)", "argsIgnorePattern": "^_", "caughtErrors": "none" }],
+    no-plusplus: 0, # Meaningless as other rules prevent the errors that could happens.
+    class-methods-use-this: 0, # We should enable this rule, but not before launch.
+    # Rules dependent on external APIs that would otherwise break rules or be needlessly complex:
+    no-underscore-dangle: 0,
+    no-restricted-syntax: 0,
+  }
+}

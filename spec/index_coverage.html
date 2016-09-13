@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mocha</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/spec/mocha.css">
+</head>
+<body>
+<div id="mocha"></div>
+<div id="root">
+  <img id="avatar-1" name="avatar-1" alt="" width="80" height="80" src="datauri:">
+</div>
+<script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+<script src="../node_modules/dirty-chai/lib/dirty-chai.js"></script>
+<script src="../node_modules/chai-as-promised/lib/chai-as-promised.js"></script>
+<script src="../node_modules/sinon-chai/lib/sinon-chai.js"></script>
+<script src="../node_modules/sinon/pkg/sinon.js"></script>
+<script src="../instrumented/avatar.js"></script>
+<script>
+if (typeof initMochaPhantomJS === 'function') {
+  initMochaPhantomJS()
+}
+</script>
+<script>
+var expect = chai.expect,
+    should = chai.should(),
+    assert = chai.assert;
+chai.config.includeStack = true;
+chai.config.showDiff = true;
+mocha.setup({
+  ui: 'bdd',
+  ignoreLeaks: true,
+  timeout: 25000
+});
+</script>
+<script src="/spec/avatar_spec.js"></script>
+<script>
+mocha.run();
+</script>
+</body>
+</html>
