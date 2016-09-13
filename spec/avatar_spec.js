@@ -139,23 +139,35 @@ describe('Avatar', function () {
   });
 
   describe('#githubAvatar', function () {
-    beforeEach(function () {
+    it('should return a GitHub Avatar URL via instance', function () {
       avatar = new Avatar(image, {
         useGravatar: false,
-        github_id: 67945
-      });
-    });
-
-    it('should return a GitHub Avatar URL', function () {
-      var github_url = avatar.githubAvatar({
         github_id: 67945,
         size: 80
       });
-      github_url.should.match(/https:\/\/avatars[0-3].githubusercontent.com\/u\/67945\?v=3&s=[0-9]{1,4}/i);
+      avatar.element.src.should.match(/https:\/\/avatars[0-3].githubusercontent.com\/u\/[0-9]{1,}\?v=3&s=[0-9]{1,4}/i);
+    });
+
+    it('should return a GitHub Avatar URL', function () {
+      var github_url = Avatar.githubAvatar({
+        github_id: 67945,
+        size: 80
+      });
+      github_url.should.match(/https:\/\/avatars[0-3].githubusercontent.com\/u\/[0-9]{1,}\?v=3&s=[0-9]{1,4}/i);
+    });
+
+    it('should rnot throw an error with no settings', function () {
+      var github_url = Avatar.githubAvatar();
+      github_url.should.match(/https:\/\/avatars[0-3].githubusercontent.com\/u\/[0-9]{1,}\?v=3&s=[0-9]{1,4}/i);
     });
   });
 
   describe('#avatarsioAvatar', function () {
+    it('should work as a static method', function () {
+      var github_url = Avatar.avatarsioAvatar();
+      github_url.should.equal('http://avatars.io/');
+    });
+
     it('should return an Avatars.io Avatar URL', function () {
       avatar = new Avatar(image, {
         useGravatar: false,
@@ -166,14 +178,7 @@ describe('Avatar', function () {
           size: 'small'
         }
       });
-      var github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          user_id: 12345,
-          identifier: 'custom-id',
-          size: 'small'
-        }
-      });
-      github_url.should.equal('http://avatars.io/12345/custom-id?size=small');
+      avatar.element.src.should.equal('http://avatars.io/12345/custom-id?size=small');
     });
 
     it('should return an Avatars.io Avatar URL with a custom size', function () {
@@ -186,14 +191,7 @@ describe('Avatar', function () {
           size: 'medium'
         }
       });
-      var github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          user_id: 12345,
-          identifier: 'custom-id',
-          size: 'medium'
-        }
-      });
-      github_url.should.equal('http://avatars.io/12345/custom-id?size=medium');
+      avatar.element.src.should.equal('http://avatars.io/12345/custom-id?size=medium');
     });
 
     it('should return an Avatars.io Facebook Avatar URL', function () {
@@ -205,13 +203,7 @@ describe('Avatar', function () {
           size: 'small'
         }
       });
-      var github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          facebook: 'matthew.callis',
-          size: 'small'
-        }
-      });
-      github_url.should.equal('http://avatars.io/facebook/matthew.callis?size=small');
+      avatar.element.src.should.equal('http://avatars.io/facebook/matthew.callis?size=small');
     });
 
     it('should return an Avatars.io Twitter Avatar URL', function () {
@@ -223,13 +215,7 @@ describe('Avatar', function () {
           size: 'small'
         }
       });
-      var github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          twitter: 'superfamicom',
-          size: 'small'
-        }
-      });
-      github_url.should.equal('http://avatars.io/twitter/superfamicom?size=small');
+      avatar.element.src.should.equal('http://avatars.io/twitter/superfamicom?size=small');
     });
 
     it('should return an Avatars.io Instagram Avatar URL', function () {
@@ -241,76 +227,91 @@ describe('Avatar', function () {
           size: 'small'
         }
       });
-      var github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          instagram: 'matthewcallis',
-          size: 'small'
-        }
-      });
-      github_url.should.equal('http://avatars.io/instagram/matthewcallis?size=small');
+      avatar.element.src.should.equal('http://avatars.io/instagram/matthewcallis?size=small');
     });
   });
 
   describe('#gravatarUrl', function () {
+    it('should return a Gravatar URL as a static method', function () {
+      var url = Avatar.gravatarUrl();
+      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+    });
+
     it('should return a Gravatar URL with an email address', function () {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         email: 'test@test.com'
       });
-      var url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
     });
 
     it('should return a Gravatar URL with an hash', function () {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         hash: 'b642b4217b34b1e8d3bd915fc65c4452'
       });
-      var url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
     });
 
     it('should return a Gravatar URL with nothing', function () {
-      avatar = new Avatar(image);
-      var url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+      avatar = new Avatar(image, { allowGravatarFallback: true });
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
     });
 
     it('should return a Gravatar URL with a custom size', function () {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         size: 100
       });
-      var url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
+    });
+
+    it('should return a Gravatar URL with a custom size (string)', function () {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         size: '100'
       });
-      url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
+    });
+
+    it('should return a Gravatar URL with a minimum size of 80px', function () {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         size: 0
       });
-      url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+    });
+
+    it('should return a Gravatar URL with a maximum size of 2048px', function () {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         size: 4000
       });
-      url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
     });
 
     it('should return a Gravatar URL with a custom fallback', function () {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         fallback: 'test'
       });
-      var url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=test&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=test&r=x');
     });
 
     it('should return a Gravatar URL with a custom rating', function () {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         rating: 'g'
       });
-      var url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=g');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=g');
+    });
+
+    it('should return a Gravatar URL with a forced default', function () {
+      avatar = new Avatar(image, {
+        allowGravatarFallback: true,
+        forcedefault: true
+      });
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x&f=y');
     });
   });
 

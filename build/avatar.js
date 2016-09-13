@@ -250,19 +250,20 @@ var Avatar = function () {
       }
     }, options);
 
+    var source = this.settings.fallbackImage;
     if (this.settings.useGravatar && this.settings.allowGravatarFallback) {
-      this.setSource(this.gravatarUrl());
+      source = Avatar.gravatarUrl(this.settings);
     } else if (this.settings.useGravatar) {
       this.gravatarValid();
-    } else if (this.settings.use_avatars_io && (this.settings.avatars_io.user_id !== null || this.settings.avatars_io.twitter != null || this.settings.avatars_io.facebook != null || this.settings.avatars_io.instagram != null)) {
-      this.setSource(this.avatarsioAvatar());
+    } else if (this.settings.use_avatars_io && (this.settings.avatars_io.user_id || this.settings.avatars_io.twitter || this.settings.avatars_io.facebook || this.settings.avatars_io.instagram)) {
+      source = Avatar.avatarsioAvatar(this.settings);
     } else if (this.settings.github_id) {
-      this.setSource(this.githubAvatar());
+      source = Avatar.githubAvatar(this.settings);
     } else if (this.settings.initials.length > 0) {
-      this.setSource(this.initialAvatar());
-    } else {
-      this.setSource(this.settings.fallbackImage);
+      source = this.initialAvatar();
     }
+
+    this.setSource(source);
 
     return this;
   }
@@ -301,42 +302,6 @@ var Avatar = function () {
       return canvas.toDataURL('image/png');
     }
   }, {
-    key: 'githubAvatar',
-    value: function githubAvatar() {
-      var cdn_min = 0;
-      var cdn_max = 3;
-      var cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
-      return 'https://avatars' + cdn + '.githubusercontent.com/u/' + this.settings.github_id + '?v=3&s=' + this.settings.size;
-    }
-  }, {
-    key: 'avatarsioAvatar',
-    value: function avatarsioAvatar() {
-      var avatars_io_url = 'http://avatars.io/';
-      /* istanbul ignore else */
-      if (this.settings.avatars_io.user_id && this.settings.avatars_io.identifier) {
-        avatars_io_url += this.settings.avatars_io.user_id + '/' + this.settings.avatars_io.identifier;
-      } else if (this.settings.avatars_io.twitter) {
-        avatars_io_url += 'twitter/' + this.settings.avatars_io.twitter;
-      } else if (this.settings.avatars_io.facebook) {
-        avatars_io_url += 'facebook/' + this.settings.avatars_io.facebook;
-      } else if (this.settings.avatars_io.instagram) {
-        avatars_io_url += 'instagram/' + this.settings.avatars_io.instagram;
-      }
-      avatars_io_url += '?size=' + this.settings.avatars_io.size;
-      return avatars_io_url;
-    }
-  }, {
-    key: 'gravatarUrl',
-    value: function gravatarUrl() {
-      var size = this.settings.size >= 1 && this.settings.size <= 2048 ? this.settings.size : 80;
-      var email_or_hash = this.settings.hash || this.settings.email;
-      if (!email_or_hash || typeof email_or_hash !== 'string') {
-        email_or_hash = '00000000000000000000000000000000';
-      }
-      email_or_hash = email_or_hash.toLowerCase().trim();
-      return ['https://secure.gravatar.com/avatar/', email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash, '?s=' + size, '&d=' + encodeURIComponent(this.settings.fallback), '&r=' + this.settings.rating, this.settings.forcedefault ? '&f=y' : ''].join('');
-    }
-  }, {
     key: 'gravatarValid',
     value: function gravatarValid() {
       if (!(this.settings.email || this.settings.hash)) {
@@ -357,7 +322,7 @@ var Avatar = function () {
   }, {
     key: 'gravatarValidOnLoad',
     value: function gravatarValidOnLoad() {
-      this.setSource(this.gravatarUrl());
+      this.setSource(Avatar.gravatarUrl(this.settings));
     }
   }, {
     key: 'gravatarValidOnError',
@@ -367,6 +332,57 @@ var Avatar = function () {
         return;
       }
       this.setSource(this.settings.fallbackImage);
+    }
+  }], [{
+    key: 'gravatarUrl',
+    value: function gravatarUrl() {
+      var settings = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      var size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
+      var email_or_hash = settings.hash || settings.email;
+      if (!email_or_hash || typeof email_or_hash !== 'string') {
+        email_or_hash = '00000000000000000000000000000000';
+      }
+      email_or_hash = email_or_hash.toLowerCase().trim();
+
+      var hash = email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash;
+      var fallback = settings.fallback ? encodeURIComponent(settings.fallback) : 'mm';
+      var rating = settings.rating || 'x';
+      var forcedefault = settings.forcedefault ? '&f=y' : '';
+
+      return 'https://secure.gravatar.com/avatar/' + hash + '?s=' + size + '&d=' + fallback + '&r=' + rating + forcedefault;
+    }
+  }, {
+    key: 'githubAvatar',
+    value: function githubAvatar() {
+      var settings = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      var cdn_min = 0;
+      var cdn_max = 3;
+      var cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
+      return 'https://avatars' + cdn + '.githubusercontent.com/u/' + (settings.github_id || 0) + '?v=3&s=' + (settings.size || 80);
+    }
+  }, {
+    key: 'avatarsioAvatar',
+    value: function avatarsioAvatar() {
+      var settings = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      var avatars_io_url = 'http://avatars.io/';
+      if (!settings.avatars_io) {
+        return avatars_io_url;
+      }
+      /* istanbul ignore else */
+      if (settings.avatars_io.user_id && settings.avatars_io.identifier) {
+        avatars_io_url += settings.avatars_io.user_id + '/' + settings.avatars_io.identifier;
+      } else if (settings.avatars_io.twitter) {
+        avatars_io_url += 'twitter/' + settings.avatars_io.twitter;
+      } else if (settings.avatars_io.facebook) {
+        avatars_io_url += 'facebook/' + settings.avatars_io.facebook;
+      } else if (settings.avatars_io.instagram) {
+        avatars_io_url += 'instagram/' + settings.avatars_io.instagram;
+      }
+      avatars_io_url += '?size=' + settings.avatars_io.size;
+      return avatars_io_url;
     }
   }]);
 

@@ -139,23 +139,35 @@ describe('Avatar', () => {
   });
 
   describe('#githubAvatar', () => {
-    beforeEach(() => {
+    it('should return a GitHub Avatar URL via instance', () => {
       avatar = new Avatar(image, {
         useGravatar: false,
         github_id: 67945,
+        size: 80,
       });
+      avatar.element.src.should.match(/https:\/\/avatars[0-3].githubusercontent.com\/u\/[0-9]{1,}\?v=3&s=[0-9]{1,4}/i);
     });
 
     it('should return a GitHub Avatar URL', () => {
-      const github_url = avatar.githubAvatar({
+      const github_url = Avatar.githubAvatar({
         github_id: 67945,
         size: 80,
       });
-      github_url.should.match(/https:\/\/avatars[0-3].githubusercontent.com\/u\/67945\?v=3&s=[0-9]{1,4}/i);
+      github_url.should.match(/https:\/\/avatars[0-3].githubusercontent.com\/u\/[0-9]{1,}\?v=3&s=[0-9]{1,4}/i);
+    });
+
+    it('should rnot throw an error with no settings', () => {
+      const github_url = Avatar.githubAvatar();
+      github_url.should.match(/https:\/\/avatars[0-3].githubusercontent.com\/u\/[0-9]{1,}\?v=3&s=[0-9]{1,4}/i);
     });
   });
 
   describe('#avatarsioAvatar', () => {
+    it('should work as a static method', () => {
+      const github_url = Avatar.avatarsioAvatar();
+      github_url.should.equal('http://avatars.io/');
+    });
+
     it('should return an Avatars.io Avatar URL', () => {
       avatar = new Avatar(image, {
         useGravatar: false,
@@ -166,14 +178,7 @@ describe('Avatar', () => {
           size: 'small',
         },
       });
-      const github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          user_id: 12345,
-          identifier: 'custom-id',
-          size: 'small',
-        },
-      });
-      github_url.should.equal('http://avatars.io/12345/custom-id?size=small');
+      avatar.element.src.should.equal('http://avatars.io/12345/custom-id?size=small');
     });
 
     it('should return an Avatars.io Avatar URL with a custom size', () => {
@@ -186,14 +191,7 @@ describe('Avatar', () => {
           size: 'medium',
         },
       });
-      const github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          user_id: 12345,
-          identifier: 'custom-id',
-          size: 'medium',
-        },
-      });
-      github_url.should.equal('http://avatars.io/12345/custom-id?size=medium');
+      avatar.element.src.should.equal('http://avatars.io/12345/custom-id?size=medium');
     });
 
     it('should return an Avatars.io Facebook Avatar URL', () => {
@@ -205,13 +203,7 @@ describe('Avatar', () => {
           size: 'small',
         },
       });
-      const github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          facebook: 'matthew.callis',
-          size: 'small',
-        },
-      });
-      github_url.should.equal('http://avatars.io/facebook/matthew.callis?size=small');
+      avatar.element.src.should.equal('http://avatars.io/facebook/matthew.callis?size=small');
     });
 
     it('should return an Avatars.io Twitter Avatar URL', () => {
@@ -223,13 +215,7 @@ describe('Avatar', () => {
           size: 'small',
         },
       });
-      const github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          twitter: 'superfamicom',
-          size: 'small',
-        },
-      });
-      github_url.should.equal('http://avatars.io/twitter/superfamicom?size=small');
+      avatar.element.src.should.equal('http://avatars.io/twitter/superfamicom?size=small');
     });
 
     it('should return an Avatars.io Instagram Avatar URL', () => {
@@ -241,76 +227,91 @@ describe('Avatar', () => {
           size: 'small',
         },
       });
-      const github_url = avatar.avatarsioAvatar({
-        avatars_io: {
-          instagram: 'matthewcallis',
-          size: 'small',
-        },
-      });
-      github_url.should.equal('http://avatars.io/instagram/matthewcallis?size=small');
+      avatar.element.src.should.equal('http://avatars.io/instagram/matthewcallis?size=small');
     });
   });
 
   describe('#gravatarUrl', () => {
+    it('should return a Gravatar URL as a static method', () => {
+      const url = Avatar.gravatarUrl();
+      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+    });
+
     it('should return a Gravatar URL with an email address', () => {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         email: 'test@test.com',
       });
-      const url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
     });
 
     it('should return a Gravatar URL with an hash', () => {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         hash: 'b642b4217b34b1e8d3bd915fc65c4452',
       });
-      const url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
     });
 
     it('should return a Gravatar URL with nothing', () => {
-      avatar = new Avatar(image);
-      const url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+      avatar = new Avatar(image, { allowGravatarFallback: true });
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
     });
 
     it('should return a Gravatar URL with a custom size', () => {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         size: 100,
       });
-      let url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
+    });
+
+    it('should return a Gravatar URL with a custom size (string)', () => {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         size: '100',
       });
-      url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
+    });
+
+    it('should return a Gravatar URL with a minimum size of 80px', () => {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         size: 0,
       });
-      url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+    });
+
+    it('should return a Gravatar URL with a maximum size of 2048px', () => {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         size: 4000,
       });
-      url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
     });
 
     it('should return a Gravatar URL with a custom fallback', () => {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         fallback: 'test',
       });
-      const url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=test&r=x');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=test&r=x');
     });
 
     it('should return a Gravatar URL with a custom rating', () => {
       avatar = new Avatar(image, {
+        allowGravatarFallback: true,
         rating: 'g',
       });
-      const url = avatar.gravatarUrl(avatar.settings);
-      url.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=g');
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=g');
+    });
+
+    it('should return a Gravatar URL with a forced default', () => {
+      avatar = new Avatar(image, {
+        allowGravatarFallback: true,
+        forcedefault: true,
+      });
+      avatar.element.src.should.equal('https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x&f=y');
     });
   });
 
