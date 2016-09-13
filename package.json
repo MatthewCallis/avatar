@@ -26,11 +26,6 @@
     "type": "git",
     "url": "https://github.com/MatthewCallis/avatar"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MatthewCallis/avatar",
-    "path": "MatthewCallis/avatar"
-  },
   "bugs": {
     "url": "https://github.com/MatthewCallis/avatar/issues"
   },
@@ -42,22 +37,41 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "chai-as-promised": "^5.3.0",
+    "autoprefixer": "^6.4.1",
+    "babel-cli": "^6.14.0",
+    "babel-plugin-external-helpers": "^6.8.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-es2016": "^6.11.3",
+    "babel-register": "^6.14.0",
     "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
     "codeclimate-test-reporter": "^0.3.3",
-    "coffee-script": "^1.10.0",
-    "coveralls": "^2.11.9",
+    "coveralls": "^2.11.12",
+    "dirty-chai": "^1.2.2",
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-mocha": "4.5.1",
+    "eslint-plugin-react": "^6.2.1",
+    "istanbul": "^0.4.5",
     "jquery": "^3",
-    "jsdom": "^9.2.1",
-    "md5": "^2.1.0",
-    "mocha-istanbul": "^0.2.0",
-    "mocha-jsdom": "^1.1.0",
-    "mocha-lcov-reporter": "^1.2.0",
-    "mocha-phantomjs": "^4.0.2",
-    "mocha": "^2.5.3",
-    "npm-bump": "^0.0.18",
+    "local-web-server": "^1.2.6",
+    "mocha": "^3.0.2",
+    "mocha-phantomjs-core": "^1.3.1",
+    "node-sass": "^3.9.3",
+    "npm-bump": "^0.0.20",
+    "phantomjs": "^2.1.7",
+    "postcss-cli": "^2.6.0",
+    "precommit-hook-eslint": "^3.0.0",
+    "rollup": "^0.35.9",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-json": "^2.0.2",
+    "s3-deploy": "^0.6.1",
+    "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
-    "sinon": "^1.17.4"
+    "uglify-js": "^2.7.3"
   },
   "directories": {},
   "preferGlobal": false,
@@ -73,14 +87,26 @@
     "dependencies": {}
   },
   "scripts": {
-    "instrument": "istanbul instrument --output build-coverage build/",
-    "compile-tests": "coffee --compile --output test/ test/",
-    "coverage": "istanbul instrument --output build-coverage build/ && istanbul cover _mocha -- test/*_spec.js -R spec",
     "coverage-report": "istanbul report --root coverage lcov",
-    "lint": "coffeelint src/*.coffee",
-    "make": "coffee --compile --output build/ src/*.coffee",
-    "test": "coffee --compile --output test/ test/*.coffee && ./node_modules/mocha/bin/mocha --globals md5",
-    "test-phantomjs": "mocha-phantomjs --setting localToRemoteUrlAccessEnabled=true --ssl-protocol=any --setting webSecurityEnabled=false test/index.html --hooks ./phantom_hooks.js --timeout 25000"
+    "coverage": "istanbul cover _mocha -- spec/**/*_spec.js -R spec",
+    "instrument": "istanbul instrument --output instrumented/ build/",
+    "lint": "eslint src",
+    "local-web-server": "ws --port 8181 --no-cache --verbose",
+    "make": "node rollup.config.js",
+    "make-individual": "babel src --out-dir build",
+    "make-tests": "babel --compact false spec_src --out-dir spec",
+    "test": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js http://localhost:8181/spec/index.html spec \"{ \\\"useColors\\\": true, \\\"settings\\\": { \\\"loadImages\\\": false, \\\"localToRemoteUrlAccessEnabled\\\": true, \\\"webSecurityEnabled\\\": false } }\"",
+    "test-coverage": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js http://localhost:8181/spec/index_coverage.html spec \"{ \\\"useColors\\\": true, \\\"hooks\\\": \\\"../../spec/phantom_hooks.js\\\", \\\"settings\\\": { \\\"loadImages\\\": false, \\\"localToRemoteUrlAccessEnabled\\\": true, \\\"webSecurityEnabled\\\": false } }\"",
+    "test-precommit": "phantomjs ./node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js http://localhost:8181/spec/index.html spec",
+    "validate": "npm ls",
+    "build-styles": "node-sass --output-style compressed sass/styles.scss -o build/styles && postcss --use autoprefixer build/styles/*.css -d build/styles/",
+    "watch-styles": "node-sass --watch sass/styles.scss -o build/styles/",
+    "uglify": "uglifyjs build/avatar.js > build/avatar.min.js"
   },
-  "github": "https://github.com/MatthewCallis/avatar"
+  "github": "https://github.com/MatthewCallis/avatar",
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test-precommit"
+  ]
 }
