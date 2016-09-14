@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/spec/mocha.css">
+</head>
+<body>
+
+<div class="avatar-examples">
+  <img src="#" alt="Gravatar" title="Gravatar" width="80" height="80" class="pretty-avatar" id="gravatar"/>
+  <img src="#" alt="Initials" title="Initials" width="80" height="80" class="pretty-avatar" id="initials"/>
+  <img src="#" alt="SVG" title="SVG" width="80" height="80" class="pretty-avatar" id="svg"/>
+  <img src="#" alt="Kitten" title="Kitten" width="80" height="80" class="pretty-avatar" id="kitten"/>
+  <img src="#" alt="e404" title="e404" width="80" height="80" class="pretty-avatar" id="e404"/>
+</div>
+
+<script src="../build/avatar.js"></script>
+<script>
+var gravatar = new Avatar(document.getElementById('gravatar'), {
+  'useGravatar': true,
+  'size': 160,
+  'email': 'matthew@apptentive.com'
+});
+
+var initials = new Avatar(document.getElementById('initials'), {
+  'useGravatar': false,
+  'initials': 'MC'
+});
+
+var kitten = new Avatar(document.getElementById('kitten'), {
+  'useGravatar': false,
+  'fallbackImage': 'http://placekitten.com/g/80/80'
+});
+
+var svg = new Avatar(document.getElementById('svg'), {
+  'useGravatar': false
+});
+
+var e404 = new Avatar(document.getElementById('e404'), {
+  'useGravatar': true,
+  'size': 160,
+  'hash': '000000000000000000000000'
+});
+</script>
+</body>
+</html>

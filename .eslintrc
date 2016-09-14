@@ -1,0 +1,25 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+    "mocha"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "mocha": true,
+  },
+  "globals": {
+    "sinon": false,
+    "mocha": true,
+    "expect": true,
+  },
+  # Custom Disabled Rules
+  rules: {
+    camelcase: 0,
+    max-len: 0,
+    no-param-reassign: 0,
+    no-unused-vars: ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_", "caughtErrors": "none" }],
+    no-plusplus: 0, # Meaningless as other rules prevent the errors that could happen.
+    no-restricted-syntax: 0,
+  }
+}
