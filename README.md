@@ -118,6 +118,11 @@ There are a lot of these and keeping up with them is hard, so here's a list:
 * [Jam](http://jamjs.org/) - [avatar-initials](http://jamjs.org/packages/#/details/avatar-initials) - `package.json`
 * [Duo](http://duojs.org/) - `component.json`
 
+### Releasing
+
+* [npm](https://www.npmjs.com/) - `npm-bump major/minor/patch`
+* [bower](http://bower.io/) - `bower info avatar`
+
 ### License
 
 Avatar is [MIT licensed](./LICENSE).
