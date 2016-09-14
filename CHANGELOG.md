@@ -1,3 +1,10 @@
+## 2.0.0 (September 13th, 2016)
+
+* Update to ES6 from CoffeeScript.
+* More test coverage.
+* Code Coverage 100%
+* Static methods if you only need URL generation.
+
 ## 1.4.0 (Feb. 16, 2015)
 
 * Fix NPM bundling.
