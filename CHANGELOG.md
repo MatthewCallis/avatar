@@ -1,4 +1,4 @@
-## 2.1.0 (September 16th, 2016)
+## 2.2.0 (September 16th, 2016)
 
 * [Fix Chrome 'Zoom' feature makes the generated initials too small](https://github.com/MatthewCallis/avatar/issues/11)
 
