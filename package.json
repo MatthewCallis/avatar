@@ -18,8 +18,7 @@
   ],
   "main": "build/avatar.js",
   "files": [
-    "build/avatar.js",
-    "vendor/md5.js"
+    "build/avatar.js"
   ],
   "homepage": "http://matthewcallis.github.io/avatar/",
   "repository": {
