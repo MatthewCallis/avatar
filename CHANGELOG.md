@@ -1,3 +1,7 @@
+## 2.1.0 (September 16th, 2016)
+
+* [Fix Chrome 'Zoom' feature makes the generated initials too small](https://github.com/MatthewCallis/avatar/issues/11)
+
 ## 2.0.0 (September 13th, 2016)
 
 * Update to ES6 from CoffeeScript.

@@ -21,7 +21,7 @@ install:
   - "npm install -g codeclimate-test-reporter"
   - "npm install -g local-web-server"
 before_script:
-  - "ws --port 8181 --no-cache &"
+  - "ruby -run -e httpd . -p 8181 &"
 script:
   - npm run instrument
   - npm run test-phantomjs

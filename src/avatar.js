@@ -70,11 +70,12 @@ class Avatar {
     const context = canvas.getContext('2d');
     const width = this.element.width || this.settings.size;
     const height = this.element.height || this.settings.size;
-    canvas.width = width * window.devicePixelRatio;
-    canvas.height = height * window.devicePixelRatio;
+    const devicePixelRatio = Math.max(window.devicePixelRatio, 1);
+    canvas.width = width * devicePixelRatio;
+    canvas.height = height * devicePixelRatio;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
-    context.scale(window.devicePixelRatio, window.devicePixelRatio);
+    context.scale(devicePixelRatio, devicePixelRatio);
     context.rect(0, 0, canvas.width, canvas.height);
     context.fillStyle = this.settings.initial_bg;
     context.fill();
