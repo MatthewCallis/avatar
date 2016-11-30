@@ -6,6 +6,8 @@
 [![Test Coverage](https://codeclimate.com/github/MatthewCallis/avatar/badges/coverage.svg)](https://codeclimate.com/github/MatthewCallis/avatar)
 [![Coverage Status](https://coveralls.io/repos/MatthewCallis/avatar/badge.svg)](https://coveralls.io/r/MatthewCallis/avatar)
 [![bitHound Overall Score](https://www.bithound.io/github/MatthewCallis/avatar/badges/score.svg)](https://www.bithound.io/github/MatthewCallis/avatar)
+[![npm version](https://img.shields.io/npm/v/avatar-initials.svg?style=flat-square)](https://www.npmjs.com/package/avatar-initials)
+[![npm downloads](https://img.shields.io/npm/dm/avatar-initials.svg?style=flat-square)](https://www.npmjs.com/package/avatar-initials)
 [![git-brag-stats](https://labs.turbo.run/git-brag?user=MatthewCallis&repo=avatar&maxn=8)](https://github.com/turbo/git-brag)
 
 
