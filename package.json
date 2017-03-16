@@ -1,6 +1,6 @@
 {
   "name": "avatar-initials",
-  "version": "2.5.0",
+  "version": "2.5.1-pre",
   "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
   "author": "Matthew Callis <matthew.callis@gmail.com>",
   "contributors": [
