@@ -213,7 +213,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* global jQuery */
 var Avatar = function () {
   function Avatar(element) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     _classCallCheck(this, Avatar);
 
@@ -337,7 +337,7 @@ var Avatar = function () {
   }], [{
     key: 'gravatarUrl',
     value: function gravatarUrl() {
-      var settings = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       var size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
       var email_or_hash = settings.hash || settings.email;
@@ -356,7 +356,7 @@ var Avatar = function () {
   }, {
     key: 'githubAvatar',
     value: function githubAvatar() {
-      var settings = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       var cdn_min = 0;
       var cdn_max = 3;
@@ -366,9 +366,9 @@ var Avatar = function () {
   }, {
     key: 'avatarsioAvatar',
     value: function avatarsioAvatar() {
-      var settings = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-      var avatars_io_url = 'http://avatars.io/';
+      var avatars_io_url = 'https://avatars.io/';
       if (!settings.avatars_io) {
         return avatars_io_url;
       }
