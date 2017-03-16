@@ -141,7 +141,7 @@ class Avatar {
   }
 
   static avatarsioAvatar(settings = {}) {
-    let avatars_io_url = 'http://avatars.io/';
+    let avatars_io_url = 'https://avatars.io/';
     if (!settings.avatars_io) {
       return avatars_io_url;
     }

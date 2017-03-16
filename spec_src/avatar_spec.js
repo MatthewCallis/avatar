@@ -165,7 +165,7 @@ describe('Avatar', () => {
   describe('#avatarsioAvatar', () => {
     it('should work as a static method', () => {
       const github_url = Avatar.avatarsioAvatar();
-      github_url.should.equal('http://avatars.io/');
+      github_url.should.equal('https://avatars.io/');
     });
 
     it('should return an Avatars.io Avatar URL', () => {
