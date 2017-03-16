@@ -1,6 +1,6 @@
 {
   "name": "avatar-initials",
-  "version": "2.3.1-pre",
+  "version": "2.4.0",
   "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
   "author": "Matthew Callis <matthew.callis@gmail.com>",
   "contributors": [
@@ -102,9 +102,5 @@
     "uglify": "uglifyjs build/avatar.js > build/avatar.min.js"
   },
   "github": "https://github.com/MatthewCallis/avatar",
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test-precommit"
-  ]
+  "pre-commit": []
 }
