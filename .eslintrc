@@ -1,7 +1,11 @@
 {
   "extends": "airbnb",
   "plugins": [
-    "mocha"
+    "ava",
+    "hapi",
+    "mocha",
+    "no-inferred-method-name",
+    "xss"
   ],
   "env": {
     "es6": true,
