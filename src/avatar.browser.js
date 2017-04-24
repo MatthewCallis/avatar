@@ -1,6 +1,6 @@
-import md5 from 'md5';
+import md5 from './md5';
 
-export default class Avatar {
+class Avatar {
   constructor(element, options = {}) {
     if (!element) {
       throw new Error('No image element provided.');
@@ -64,6 +64,7 @@ export default class Avatar {
 
   initialAvatar() {
     const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
     const width = this.element.width || this.settings.size;
     const height = this.element.height || this.settings.size;
     const devicePixelRatio = Math.max(window.devicePixelRatio, 1);
@@ -71,21 +72,17 @@ export default class Avatar {
     canvas.height = height * devicePixelRatio;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
+    context.scale(devicePixelRatio, devicePixelRatio);
+    context.rect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = this.settings.initial_bg;
+    context.fill();
+    context.font = `${this.settings.initial_weight} ${this.settings.initial_size || height / 2}px ${this.settings.initial_font_family}`;
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillStyle = this.settings.initial_fg;
+    context.fillText(this.settings.initials, (width / 2), (height / 2));
 
-    const context = canvas.getContext('2d');
-    if (context) {
-      context.scale(devicePixelRatio, devicePixelRatio);
-      context.rect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = this.settings.initial_bg;
-      context.fill();
-      context.font = `${this.settings.initial_weight} ${this.settings.initial_size || height / 2}px ${this.settings.initial_font_family}`;
-      context.textAlign = 'center';
-      context.textBaseline = 'middle';
-      context.fillStyle = this.settings.initial_fg;
-      context.fillText(this.settings.initials, (width / 2), (height / 2));
-    }
-
-    return canvas.toDataURL('image/png') || 'data:';
+    return canvas.toDataURL('image/png');
   }
 
   gravatarValid() {

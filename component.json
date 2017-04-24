@@ -1,9 +1,0 @@
-{
-  "name": "Avatar",
-  "repo": "MatthewCallis/avatar",
-  "description": "JavaScript library for showing Gravatars or generating user avatars from initials.",
-  "version": "2.2.0",
-  "keywords": ["image", "avatar", "gravatar", "initials"],
-  "scripts": ["build/avatar.js"],
-  "license": "MIT"
-}

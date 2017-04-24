@@ -4,3 +4,4 @@ node_modules/
 coverage/
 instrumented
 npm-debug.log
+.nyc-output/

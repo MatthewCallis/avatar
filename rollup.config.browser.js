@@ -4,7 +4,7 @@ const babel = require('rollup-plugin-babel');
 const json = require('rollup-plugin-json');
 
 rollup({
-  entry: 'src/avatar.js',
+  entry: 'src/avatar.browser.js',
   plugins: [
     json({
       exclude: ['node_modules/**'],
@@ -17,13 +17,13 @@ rollup({
 })
 .then(bundle => (
   bundle.write({
-    format: 'cjs',
+    format: 'es',
     moduleName: 'Avatar',
-    dest: 'build/avatar.js',
+    dest: 'build/avatar.browser.js',
   })
 ))
 .then(() => {
-  console.log('Node bundle created');
+  console.log('Browser bundle created');
 })
 .catch((e) => {
   console.log(e);

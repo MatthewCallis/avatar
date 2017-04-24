@@ -1,3 +1,11 @@
+## 3.0.0 (April 24th, 2017)
+
+* Remove jQuery Support.
+* Node build.
+* Browser build (not in npm).
+* Move from Istanbul/Mocha/PhantomJS to ava/nyc.
+* Use md5 package.
+
 ## 2.2.0 (September 16th, 2016)
 
 * [Fix Chrome 'Zoom' feature makes the generated initials too small](https://github.com/MatthewCallis/avatar/issues/11)

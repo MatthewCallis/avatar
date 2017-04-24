@@ -16,16 +16,10 @@ Avatar is a JavaScript library for showing Gravatars or generating user avatars.
 There are several examples [on the website](http://matthewcallis.github.io/avatar/).
 
 ```js
-var avatar = new Avatar(document.getElementById('avatar'), {
+import Avatar from 'avatar-initials';
+const avatar = new Avatar(document.getElementById('avatar'), {
   'useGravatar': false,
-  'initials': 'MC'
-});
-
-/* or */
-
-$('#avatar').avatar({
-  'useGravatar': false,
-  'initials': 'MC'
+  'initials': 'MC',
 });
 ```
 
@@ -74,16 +68,43 @@ avatars_io:
 
 ## Installation
 
+```shell
+npm install --save avatar-initials
+```
+
+or
+
 ```html
 <script src="md5.js"></script>
 <script src="avatar.js"></script>
 ```
 
-Avatar expects a `window.md5()` function to be defined in order to generate the hashes needed for Gravatar. One is provided as a seperate file if you would like to use your own or don't plan on using Gravatar.
+Avatar expects a `window.md5()` function to be defined in order to generate the hashes needed for Gravatar.
+
+### jQuery Support
+
+I haven't used jQuery in a long time and don't need it personally, so if you still use it the old helper is below.
+
+```javascript
+if (typeof jQuery !== 'undefined') {
+  jQuery.fn.avatar = function avatar(options) {
+    return this.each(() => {
+      /* istanbul ignore else */
+      if (!jQuery.data(this, 'plugin_avatar')) {
+        jQuery.data(this, 'plugin_avatar', new Avatar(this, options));
+      }
+    });
+  };
+}
+```
 
 ## Running Tests
 
 To execute all unit tests, open `test/index.html` in your target browser.
+
+## Upgrading
+
+If you used any version less than 3 and still need to use it, you can stick to v2.6.0 or use the new `build/avatar.browser.js` build. If you are using Webpack or similar the npm version should work fine.
 
 ## Browser Support
 
@@ -104,7 +125,6 @@ These are the browsers I have tested on personally:
 * OS X 10.10.2 - Firefox 41.0.2
 * OS X 10.10.2 - Safari 9.0 (11601.1.56)
 
-
 ## Thanks
 
 Pretty styles and design support kindly provided by [Andrew Crocker](https://github.com/andrewcrocker).
@@ -115,10 +135,6 @@ Built with love at [Apptentive](https://github.com/apptentive).
 There are a lot of these and keeping up with them is hard, so here's a list:
 
 * [npm](https://www.npmjs.com/) - [avatar-initials](https://www.npmjs.com/package/avatar-initials) - `package.json`
-* [bower](http://bower.io/) - `bower.json`
-* [jQuery Plugins](http://plugins.jquery.com/) - `avatar.jquery.json`
-* [Jam](http://jamjs.org/) - [avatar-initials](http://jamjs.org/packages/#/details/avatar-initials) - `package.json`
-* [Duo](http://duojs.org/) - `component.json`
 
 ### Releasing
 
