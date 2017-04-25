@@ -1,3 +1,4 @@
+/* eslint no-bitwise: 0, no-unused-vars: 0 */
 import md5 from './md5';
 
 class Avatar {
