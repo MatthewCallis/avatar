@@ -100,7 +100,15 @@ if (typeof jQuery !== 'undefined') {
 
 ## Running Tests
 
-To execute all unit tests, open `test/index.html` in your target browser.
+```
+npm run make
+npm run test
+npm run report
+```
+
+```
+npm run make && npm run test && npm run report
+```
 
 ## Upgrading
 
