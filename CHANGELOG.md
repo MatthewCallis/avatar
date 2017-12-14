@@ -1,3 +1,8 @@
+## 3.0.1 (December 14th, 2017)
+
+* Update dependencies.
+* Rebuild browser build (not in npm).
+
 ## 3.0.0 (April 24th, 2017)
 
 * Remove jQuery Support.

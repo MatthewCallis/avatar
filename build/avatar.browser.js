@@ -1,4 +1,4 @@
-/* eslint no-bitwise: 0, no-unused-vars: 0 */
+/* eslint no-bitwise: 0 */
 // http://www.myersdaily.org/joseph/javascript/md5.js
 // http://www.myersdaily.org/joseph/javascript/md5-text.html
 // http://www.myersdaily.org/joseph/javascript/md5-speed-test.html
@@ -28,10 +28,10 @@ function ii(a, b, c, d, x, s, t) {
 }
 
 function md5cycle(x, k) {
-  let a = x[0];
-  let b = x[1];
-  let c = x[2];
-  let d = x[3];
+  var a = x[0];
+  var b = x[1];
+  var c = x[2];
+  var d = x[3];
 
   a = ff(a, b, c, d, k[0], 7, -680876936);
   d = ff(d, a, b, c, k[1], 12, -389564586);
@@ -124,22 +124,22 @@ function md5cycle(x, k) {
  */
 function md5blk(s) {
   /* I figured global was faster.   */
-  const md5blks = []; /* Andy King said do it this way. */
-  for (let i = 0; i < 64; i += 4) {
+  var md5blks = []; /* Andy King said do it this way. */
+  for (var i = 0; i < 64; i += 4) {
     md5blks[i >> 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) << 8) + (s.charCodeAt(i + 2) << 16) + (s.charCodeAt(i + 3) << 24);
   }
   return md5blks;
 }
 
 function md51(s) {
-  const n = s.length;
-  const state = [1732584193, -271733879, -1732584194, 271733878];
-  let i = void 0;
+  var n = s.length;
+  var state = [1732584193, -271733879, -1732584194, 271733878];
+  var i = void 0;
   for (i = 64; i <= s.length; i += 64) {
     md5cycle(state, md5blk(s.substring(i - 64, i)));
   }
   s = s.substring(i - 64);
-  const tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (i = 0; i < s.length; i++) {
     tail[i >> 2] |= s.charCodeAt(i) << (i % 4 << 3);
   }
@@ -155,11 +155,11 @@ function md51(s) {
   return state;
 }
 
-const hex_chr = '0123456789abcdef'.split('');
+var hex_chr = '0123456789abcdef'.split('');
 
 function rhex(n) {
-  let s = '';
-  let j = 0;
+  var s = '';
+  var j = 0;
   for (; j < 4; j++) {
     s += hex_chr[n >> j * 8 + 4 & 0x0F] + hex_chr[n >> j * 8 & 0x0F];
   }
@@ -167,7 +167,7 @@ function rhex(n) {
 }
 
 function hex(x) {
-  for (let i = 0; i < x.length; i++) {
+  for (var i = 0; i < x.length; i++) {
     x[i] = rhex(x[i]);
   }
   return x.join('');
@@ -177,13 +177,14 @@ function md5(s) {
   return hex(md51(s));
 }
 
-const _createClass = (function () { function defineProperties(target, props) { for (let i = 0; i < props.length; i++) { const descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }());
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-const Avatar = (function () {
+/* eslint no-bitwise: 0, no-unused-vars: 0 */
+var Avatar = function () {
   function Avatar(element) {
-    const options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     _classCallCheck(this, Avatar);
 
@@ -216,11 +217,11 @@ const Avatar = (function () {
         twitter: null,
         facebook: null,
         instagram: null,
-        size: 'medium',
-      },
+        size: 'medium'
+      }
     }, options);
 
-    let source = this.settings.fallbackImage;
+    var source = this.settings.fallbackImage;
     if (this.settings.useGravatar && this.settings.allowGravatarFallback) {
       source = Avatar.gravatarUrl(this.settings);
     } else if (this.settings.useGravatar) {
@@ -247,54 +248,54 @@ const Avatar = (function () {
       if (source) {
         this.element.src = source;
       }
-    },
+    }
   }, {
     key: 'initialAvatar',
     value: function initialAvatar() {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      const width = this.element.width || this.settings.size;
-      const height = this.element.height || this.settings.size;
-      const devicePixelRatio = Math.max(window.devicePixelRatio, 1);
+      var canvas = document.createElement('canvas');
+      var context = canvas.getContext('2d');
+      var width = this.element.width || this.settings.size;
+      var height = this.element.height || this.settings.size;
+      var devicePixelRatio = Math.max(window.devicePixelRatio, 1);
       canvas.width = width * devicePixelRatio;
       canvas.height = height * devicePixelRatio;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
       context.scale(devicePixelRatio, devicePixelRatio);
       context.rect(0, 0, canvas.width, canvas.height);
       context.fillStyle = this.settings.initial_bg;
       context.fill();
-      context.font = `${this.settings.initial_weight} ${this.settings.initial_size || height / 2}px ${this.settings.initial_font_family}`;
+      context.font = this.settings.initial_weight + ' ' + (this.settings.initial_size || height / 2) + 'px ' + this.settings.initial_font_family;
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillStyle = this.settings.initial_fg;
       context.fillText(this.settings.initials, width / 2, height / 2);
 
       return canvas.toDataURL('image/png');
-    },
+    }
   }, {
     key: 'gravatarValid',
     value: function gravatarValid() {
       if (!(this.settings.email || this.settings.hash)) {
         return;
       }
-      let image_source = void 0;
+      var image_source = void 0;
       if (this.settings.email) {
-        image_source = `https://secure.gravatar.com/avatar/${md5(this.settings.email)}?d=404`;
+        image_source = 'https://secure.gravatar.com/avatar/' + md5(this.settings.email) + '?d=404';
       }
       if (this.settings.hash) {
-        image_source = `https://secure.gravatar.com/avatar/${this.settings.hash}?d=404`;
+        image_source = 'https://secure.gravatar.com/avatar/' + this.settings.hash + '?d=404';
       }
-      const image = new Image();
+      var image = new Image();
       image.onload = this.gravatarValidOnLoad.bind(this);
       image.onerror = this.gravatarValidOnError.bind(this);
       image.src = image_source;
-    },
+    }
   }, {
     key: 'gravatarValidOnLoad',
     value: function gravatarValidOnLoad() {
       this.setSource(Avatar.gravatarUrl(this.settings));
-    },
+    }
   }, {
     key: 'gravatarValidOnError',
     value: function gravatarValidOnError() {
@@ -303,61 +304,59 @@ const Avatar = (function () {
         return;
       }
       this.setSource(this.settings.fallbackImage);
-    },
+    }
   }], [{
     key: 'gravatarUrl',
     value: function gravatarUrl() {
-      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-      const size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
-      let email_or_hash = settings.hash || settings.email;
+      var size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
+      var email_or_hash = settings.hash || settings.email;
       if (!email_or_hash || typeof email_or_hash !== 'string') {
         email_or_hash = '00000000000000000000000000000000';
       }
       email_or_hash = email_or_hash.toLowerCase().trim();
 
-      const hash = email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash;
-      const fallback = settings.fallback ? encodeURIComponent(settings.fallback) : 'mm';
-      const rating = settings.rating || 'x';
-      const forcedefault = settings.forcedefault ? '&f=y' : '';
+      var hash = email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash;
+      var fallback = settings.fallback ? encodeURIComponent(settings.fallback) : 'mm';
+      var rating = settings.rating || 'x';
+      var forcedefault = settings.forcedefault ? '&f=y' : '';
 
-      return `https://secure.gravatar.com/avatar/${hash}?s=${size}&d=${fallback}&r=${rating}${forcedefault}`;
-    },
+      return 'https://secure.gravatar.com/avatar/' + hash + '?s=' + size + '&d=' + fallback + '&r=' + rating + forcedefault;
+    }
   }, {
     key: 'githubAvatar',
     value: function githubAvatar() {
-      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-      const cdn_min = 0;
-      const cdn_max = 3;
-      const cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
-      return `https://avatars${cdn}.githubusercontent.com/u/${settings.github_id || 0}?v=3&s=${settings.size || 80}`;
-    },
+      var cdn_min = 0;
+      var cdn_max = 3;
+      var cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
+      return 'https://avatars' + cdn + '.githubusercontent.com/u/' + (settings.github_id || 0) + '?v=3&s=' + (settings.size || 80);
+    }
   }, {
     key: 'avatarsioAvatar',
     value: function avatarsioAvatar() {
-      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-      let avatars_io_url = 'https://avatars.io/';
+      var avatars_io_url = 'https://avatars.io/';
       if (!settings.avatars_io) {
         return avatars_io_url;
       }
       /* istanbul ignore else */
       if (settings.avatars_io.user_id && settings.avatars_io.identifier) {
-        avatars_io_url += `${settings.avatars_io.user_id}/${settings.avatars_io.identifier}`;
+        avatars_io_url += settings.avatars_io.user_id + '/' + settings.avatars_io.identifier;
       } else if (settings.avatars_io.twitter) {
-        avatars_io_url += `twitter/${settings.avatars_io.twitter}`;
+        avatars_io_url += 'twitter/' + settings.avatars_io.twitter;
       } else if (settings.avatars_io.facebook) {
-        avatars_io_url += `facebook/${settings.avatars_io.facebook}`;
+        avatars_io_url += 'facebook/' + settings.avatars_io.facebook;
       } else if (settings.avatars_io.instagram) {
-        avatars_io_url += `instagram/${settings.avatars_io.instagram}`;
+        avatars_io_url += 'instagram/' + settings.avatars_io.instagram;
       }
-      avatars_io_url += `?size=${settings.avatars_io.size}`;
+      avatars_io_url += '?size=' + settings.avatars_io.size;
       return avatars_io_url;
-    },
+    }
   }]);
 
   return Avatar;
-}());
-
-export default Avatar;
+}();
