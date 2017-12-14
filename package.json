@@ -107,8 +107,7 @@
     "all": true,
     "check-coverage": false,
     "include": [
-      "src/**/*.js",
-      "build/**/*.js"
+      "build/avatar.js"
     ]
   },
   "pre-commit": [
