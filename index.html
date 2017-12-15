@@ -6,7 +6,7 @@
 <title>Avatar</title>
 <link rel="stylesheet" href="stylesheets/styles.css">
 <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-<link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -79,7 +79,7 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
 
   var kitten = new Avatar(document.getElementById('kitten'), {
     'useGravatar': false,
-    'fallbackImage': 'http://placekitten.com/g/80/80'
+    'fallbackImage': 'https://placekitten.com/g/80/80'
   });
 
   var svg = new Avatar(document.getElementById('svg'), {
@@ -108,7 +108,7 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
 
   var kitten_raw = new Avatar(document.getElementById('kitten-raw'), {
     'useGravatar': false,
-    'fallbackImage': 'http://placekitten.com/g/80/80'
+    'fallbackImage': 'https://placekitten.com/g/80/80'
   });
 
   var svg_raw = new Avatar(document.getElementById('svg-raw'), {
@@ -132,7 +132,7 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
 <p>
   Pretty styles and design support kindly provided by <a href="https://twitter.com/andrewcrocker" title="Andrew Crocker">Andrew Crocker</a>.
   <br/>
-  Built with love at <a href="http://apptentive.com/" title="Apptentive">Apptentive</a>.
+  Built with love at <a href="https://apptentive.com/" title="Apptentive">Apptentive</a>.
 </p>
 
 <h3>
@@ -145,18 +145,13 @@ $(<span class="pl-s1"><span class="pl-pds">'</span>#avatar<span class="pl-pds">'
   <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
 </footer>
 </div>
-
 <script src="javascripts/scale.fix.js"></script>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-  var pageTracker = _gat._getTracker("UA-315321-9");
-  pageTracker._trackPageview();
-}
-catch(err) {}
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-315321-17"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-315321-9');
 </script>
 </body>
 </html>
