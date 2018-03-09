@@ -1,6 +1,7 @@
 import test from 'ava';
 import nock from 'nock';
 import sinon from 'sinon';
+import { iterate } from 'leakage';
 import Avatar from '../build/avatar';
 
 let avatar;
@@ -52,6 +53,14 @@ test('#constructor should throw an error if there is no element provided', (t) =
   };
   const error = t.throws(() => { fn(); }, Error);
   t.is(error.message, 'No image element provided.');
+});
+
+test.skip('#constructor does not leak', (t) => {
+  t.notThrows(() => {
+    iterate(() => {
+      avatar = new Avatar(image);
+    });
+  });
 });
 
 test('#constructor should render', (t) => {
@@ -126,6 +135,15 @@ test('#setSource should throw an error if there is no element', (t) => {
   t.throws(fn, 'No image element set.');
 });
 
+test.skip('#setSource does not leak', (t) => {
+  t.notThrows(() => {
+    iterate(() => {
+      avatar = new Avatar(image);
+      avatar.setSource('data:image/png;');
+    });
+  });
+});
+
 test('#setSource should set the src attribute', (t) => {
   avatar = new Avatar(image);
   avatar.setSource('data:image/png;');
@@ -138,6 +156,24 @@ test('#setSource should set the src attribute', (t) => {
   t.is(image.src, 'http://placekitten.com/200/300');
 });
 
+test('#setSource should do nothing if there is no source provided', (t) => {
+  avatar = new Avatar(image);
+  avatar.setSource('data:image/png;');
+  t.is(image.src, 'data:image/png;');
+
+  avatar.setSource();
+  t.is(image.src, 'data:image/png;');
+});
+
+test.skip('#initialAvatar does not leak', (t) => {
+  t.notThrows(() => {
+    iterate(() => {
+      avatar = new Avatar(image);
+      avatar.initialAvatar('MC');
+    });
+  });
+});
+
 test('#initialAvatar should return a PNG from element size', (t) => {
   avatar = new Avatar(image);
   const png = avatar.initialAvatar('MC');
@@ -148,6 +184,18 @@ test('#initialAvatar should return a PNG from the size setting', (t) => {
   avatar = new Avatar(image, { size: 60 });
   const png = avatar.initialAvatar('MC');
   t.regex(png, /^data:/); // /^data:image\/png;base64,iV/
+});
+
+test.skip('#githubAvatar does not leak', (t) => {
+  t.notThrows(() => {
+    iterate(() => {
+      avatar = new Avatar(image, {
+        useGravatar: false,
+        github_id: 67945,
+        size: 80,
+      });
+    });
+  });
 });
 
 test('#githubAvatar should return a GitHub Avatar URL via instance', (t) => {
@@ -170,6 +218,22 @@ test('#githubAvatar should return a GitHub Avatar URL', (t) => {
 test('#githubAvatar should not throw an error with no settings', (t) => {
   const github_url = Avatar.githubAvatar();
   t.regex(github_url, /https:\/\/avatars[0-3].githubusercontent.com\/u\/[0-9]{1,}\?v=3&s=[0-9]{1,4}/i);
+});
+
+test.skip('#avatarsioAvatar does not leak', (t) => {
+  t.notThrows(() => {
+    iterate(() => {
+      avatar = new Avatar(image, {
+        useGravatar: false,
+        use_avatars_io: true,
+        avatars_io: {
+          user_id: 12345,
+          identifier: 'custom-id',
+          size: 'small',
+        },
+      });
+    });
+  });
 });
 
 test('#avatarsioAvatar should work as a static method', (t) => {
@@ -237,6 +301,17 @@ test('#avatarsioAvatar should return an Avatars.io Instagram Avatar URL', (t) =>
     },
   });
   t.is(avatar.element.src, 'https://avatars.io/instagram/matthewcallis?size=small');
+});
+
+test.skip('#gravatarUrl does not leak', (t) => {
+  t.notThrows(() => {
+    iterate(() => {
+      avatar = new Avatar(image, {
+        allowGravatarFallback: true,
+        email: 'test@test.com',
+      });
+    });
+  });
 });
 
 test('#gravatarUrl should return a Gravatar URL as a static method', (t) => {
@@ -319,6 +394,18 @@ test('#gravatarUrl should return a Gravatar URL with a forced default', (t) => {
     forcedefault: true,
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x&f=y');
+});
+
+test.skip('#gravatarValid does not leak', (t) => {
+  t.notThrows(() => {
+    iterate(() => {
+      avatar = new Avatar(image, {
+        useGravatar: true,
+        email: 'test@test.test',
+      });
+      avatar.gravatarValid();
+    });
+  });
 });
 
 test('#gravatarValid should not throw an error with an email', (t) => {
