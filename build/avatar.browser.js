@@ -181,7 +181,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/* eslint no-bitwise: 0, no-unused-vars: 0 */
 var Avatar = function () {
   function Avatar(element) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
