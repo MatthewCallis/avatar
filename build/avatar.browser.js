@@ -1,3 +1,59 @@
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    var ownKeys = Object.keys(source);
+
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+      }));
+    }
+
+    ownKeys.forEach(function (key) {
+      _defineProperty(target, key, source[key]);
+    });
+  }
+
+  return target;
+}
+
 /* eslint no-bitwise: 0 */
 // http://www.myersdaily.org/joseph/javascript/md5.js
 // http://www.myersdaily.org/joseph/javascript/md5-text.html
@@ -32,7 +88,6 @@ function md5cycle(x, k) {
   var b = x[1];
   var c = x[2];
   var d = x[3];
-
   a = ff(a, b, c, d, k[0], 7, -680876936);
   d = ff(d, a, b, c, k[1], 12, -389564586);
   c = ff(c, d, a, b, k[2], 17, 606105819);
@@ -49,7 +104,6 @@ function md5cycle(x, k) {
   d = ff(d, a, b, c, k[13], 12, -40341101);
   c = ff(c, d, a, b, k[14], 17, -1502002290);
   b = ff(b, c, d, a, k[15], 22, 1236535329);
-
   a = gg(a, b, c, d, k[1], 5, -165796510);
   d = gg(d, a, b, c, k[6], 9, -1069501632);
   c = gg(c, d, a, b, k[11], 14, 643717713);
@@ -66,7 +120,6 @@ function md5cycle(x, k) {
   d = gg(d, a, b, c, k[2], 9, -51403784);
   c = gg(c, d, a, b, k[7], 14, 1735328473);
   b = gg(b, c, d, a, k[12], 20, -1926607734);
-
   a = hh(a, b, c, d, k[5], 4, -378558);
   d = hh(d, a, b, c, k[8], 11, -2022574463);
   c = hh(c, d, a, b, k[11], 16, 1839030562);
@@ -83,7 +136,6 @@ function md5cycle(x, k) {
   d = hh(d, a, b, c, k[12], 11, -421815835);
   c = hh(c, d, a, b, k[15], 16, 530742520);
   b = hh(b, c, d, a, k[2], 23, -995338651);
-
   a = ii(a, b, c, d, k[0], 6, -198630844);
   d = ii(d, a, b, c, k[7], 10, 1126891415);
   c = ii(c, d, a, b, k[14], 15, -1416354905);
@@ -100,13 +152,11 @@ function md5cycle(x, k) {
   d = ii(d, a, b, c, k[11], 10, -1120210379);
   c = ii(c, d, a, b, k[2], 15, 718787259);
   b = ii(b, c, d, a, k[9], 21, -343485551);
-
   x[0] = add32(a, x[0]);
   x[1] = add32(b, x[1]);
   x[2] = add32(c, x[2]);
   x[3] = add32(d, x[3]);
 }
-
 /* there needs to be support for Unicode here,
  * unless we pretend that we can redefine the MD-5
  * algorithm for multi-byte characters (perhaps
@@ -122,34 +172,46 @@ function md5cycle(x, k) {
  * providing access to strings as preformed UTF-8
  * 8-bit unsigned value arrays.
  */
+
+
 function md5blk(s) {
   /* I figured global was faster.   */
-  var md5blks = []; /* Andy King said do it this way. */
+  var md5blks = [];
+  /* Andy King said do it this way. */
+
   for (var i = 0; i < 64; i += 4) {
     md5blks[i >> 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) << 8) + (s.charCodeAt(i + 2) << 16) + (s.charCodeAt(i + 3) << 24);
   }
+
   return md5blks;
 }
 
 function md51(s) {
   var n = s.length;
   var state = [1732584193, -271733879, -1732584194, 271733878];
-  var i = void 0;
+  var i;
+
   for (i = 64; i <= s.length; i += 64) {
     md5cycle(state, md5blk(s.substring(i - 64, i)));
   }
+
   s = s.substring(i - 64);
   var tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
   for (i = 0; i < s.length; i++) {
     tail[i >> 2] |= s.charCodeAt(i) << (i % 4 << 3);
   }
+
   tail[i >> 2] |= 0x80 << (i % 4 << 3);
+
   if (i > 55) {
     md5cycle(state, tail);
+
     for (i = 0; i < 16; i++) {
       tail[i] = 0;
     }
   }
+
   tail[14] = n * 8;
   md5cycle(state, tail);
   return state;
@@ -160,9 +222,11 @@ var hex_chr = '0123456789abcdef'.split('');
 function rhex(n) {
   var s = '';
   var j = 0;
+
   for (; j < 4; j++) {
     s += hex_chr[n >> j * 8 + 4 & 0x0F] + hex_chr[n >> j * 8 & 0x0F];
   }
+
   return s;
 }
 
@@ -170,6 +234,7 @@ function hex(x) {
   for (var i = 0; i < x.length; i++) {
     x[i] = rhex(x[i]);
   }
+
   return x.join('');
 }
 
@@ -177,11 +242,9 @@ function md5(s) {
   return hex(md51(s));
 }
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Avatar = function () {
+var Avatar =
+/*#__PURE__*/
+function () {
   function Avatar(element) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -192,7 +255,7 @@ var Avatar = function () {
     }
 
     this.element = element;
-    this.settings = Object.assign({
+    this.settings = _objectSpread({
       useGravatar: true,
       allowGravatarFallback: false,
       initials: '',
@@ -219,8 +282,8 @@ var Avatar = function () {
         size: 'medium'
       }
     }, options);
-
     var source = this.settings.fallbackImage;
+
     if (this.settings.useGravatar && this.settings.allowGravatarFallback) {
       source = Avatar.gravatarUrl(this.settings);
     } else if (this.settings.useGravatar) {
@@ -234,22 +297,22 @@ var Avatar = function () {
     }
 
     this.setSource(source);
-
     return this;
   }
 
   _createClass(Avatar, [{
-    key: 'setSource',
+    key: "setSource",
     value: function setSource(source) {
       if (!this.element) {
         throw new Error('No image element set.');
       }
+
       if (source) {
         this.element.src = source;
       }
     }
   }, {
-    key: 'initialAvatar',
+    key: "initialAvatar",
     value: function initialAvatar() {
       var canvas = document.createElement('canvas');
       var context = canvas.getContext('2d');
@@ -258,101 +321,106 @@ var Avatar = function () {
       var devicePixelRatio = Math.max(window.devicePixelRatio, 1);
       canvas.width = width * devicePixelRatio;
       canvas.height = height * devicePixelRatio;
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
+      canvas.style.width = "".concat(width, "px");
+      canvas.style.height = "".concat(height, "px");
       context.scale(devicePixelRatio, devicePixelRatio);
       context.rect(0, 0, canvas.width, canvas.height);
       context.fillStyle = this.settings.initial_bg;
       context.fill();
-      context.font = this.settings.initial_weight + ' ' + (this.settings.initial_size || height / 2) + 'px ' + this.settings.initial_font_family;
+      context.font = "".concat(this.settings.initial_weight, " ").concat(this.settings.initial_size || height / 2, "px ").concat(this.settings.initial_font_family);
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillStyle = this.settings.initial_fg;
       context.fillText(this.settings.initials, width / 2, height / 2);
-
       return canvas.toDataURL('image/png');
     }
   }, {
-    key: 'gravatarValid',
+    key: "gravatarValid",
     value: function gravatarValid() {
       if (!(this.settings.email || this.settings.hash)) {
         return;
       }
-      var image_source = void 0;
+
+      var image_source;
+
       if (this.settings.email) {
-        image_source = 'https://secure.gravatar.com/avatar/' + md5(this.settings.email) + '?d=404';
+        image_source = "https://secure.gravatar.com/avatar/".concat(md5(this.settings.email), "?d=404");
       }
+
       if (this.settings.hash) {
-        image_source = 'https://secure.gravatar.com/avatar/' + this.settings.hash + '?d=404';
+        image_source = "https://secure.gravatar.com/avatar/".concat(this.settings.hash, "?d=404");
       }
+
       var image = new Image();
       image.onload = this.gravatarValidOnLoad.bind(this);
       image.onerror = this.gravatarValidOnError.bind(this);
       image.src = image_source;
     }
   }, {
-    key: 'gravatarValidOnLoad',
+    key: "gravatarValidOnLoad",
     value: function gravatarValidOnLoad() {
       this.setSource(Avatar.gravatarUrl(this.settings));
     }
   }, {
-    key: 'gravatarValidOnError',
+    key: "gravatarValidOnError",
     value: function gravatarValidOnError() {
       if (this.settings.initials.length > 0) {
         this.setSource(this.initialAvatar());
         return;
       }
+
       this.setSource(this.settings.fallbackImage);
     }
   }], [{
-    key: 'gravatarUrl',
+    key: "gravatarUrl",
     value: function gravatarUrl() {
       var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       var size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
       var email_or_hash = settings.hash || settings.email;
+
       if (!email_or_hash || typeof email_or_hash !== 'string') {
         email_or_hash = '00000000000000000000000000000000';
       }
-      email_or_hash = email_or_hash.toLowerCase().trim();
 
+      email_or_hash = email_or_hash.toLowerCase().trim();
       var hash = email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash;
       var fallback = settings.fallback ? encodeURIComponent(settings.fallback) : 'mm';
       var rating = settings.rating || 'x';
       var forcedefault = settings.forcedefault ? '&f=y' : '';
-
-      return 'https://secure.gravatar.com/avatar/' + hash + '?s=' + size + '&d=' + fallback + '&r=' + rating + forcedefault;
+      return "https://secure.gravatar.com/avatar/".concat(hash, "?s=").concat(size, "&d=").concat(fallback, "&r=").concat(rating).concat(forcedefault);
     }
   }, {
-    key: 'githubAvatar',
+    key: "githubAvatar",
     value: function githubAvatar() {
       var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       var cdn_min = 0;
       var cdn_max = 3;
       var cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
-      return 'https://avatars' + cdn + '.githubusercontent.com/u/' + (settings.github_id || 0) + '?v=3&s=' + (settings.size || 80);
+      return "https://avatars".concat(cdn, ".githubusercontent.com/u/").concat(settings.github_id || 0, "?v=3&s=").concat(settings.size || 80);
     }
   }, {
-    key: 'avatarsioAvatar',
+    key: "avatarsioAvatar",
     value: function avatarsioAvatar() {
       var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       var avatars_io_url = 'https://avatars.io/';
+
       if (!settings.avatars_io) {
         return avatars_io_url;
       }
       /* istanbul ignore else */
+
+
       if (settings.avatars_io.user_id && settings.avatars_io.identifier) {
-        avatars_io_url += settings.avatars_io.user_id + '/' + settings.avatars_io.identifier;
+        avatars_io_url += "".concat(settings.avatars_io.user_id, "/").concat(settings.avatars_io.identifier);
       } else if (settings.avatars_io.twitter) {
-        avatars_io_url += 'twitter/' + settings.avatars_io.twitter;
+        avatars_io_url += "twitter/".concat(settings.avatars_io.twitter);
       } else if (settings.avatars_io.facebook) {
-        avatars_io_url += 'facebook/' + settings.avatars_io.facebook;
+        avatars_io_url += "facebook/".concat(settings.avatars_io.facebook);
       } else if (settings.avatars_io.instagram) {
-        avatars_io_url += 'instagram/' + settings.avatars_io.instagram;
+        avatars_io_url += "instagram/".concat(settings.avatars_io.instagram);
       }
-      avatars_io_url += '?size=' + settings.avatars_io.size;
+
+      avatars_io_url += "?size=".concat(settings.avatars_io.size);
       return avatars_io_url;
     }
   }]);

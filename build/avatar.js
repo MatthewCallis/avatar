@@ -1,16 +1,68 @@
-'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var md5 = _interopDefault(require('md5'));
+function _interopDefault(ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex.default : ex; }
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+const md5 = _interopDefault(require('md5'));
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
 
-var Avatar = function () {
+function _defineProperties(target, props) {
+  for (let i = 0; i < props.length; i++) {
+    const descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ('value' in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _objectSpread(target) {
+  for (let i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    let ownKeys = Object.keys(source);
+    /* istanbul ignore next */
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(sym => Object.getOwnPropertyDescriptor(source, sym).enumerable));
+    }
+
+    ownKeys.forEach((key) => {
+      _defineProperty(target, key, source[key]);
+    });
+  }
+
+  return target;
+}
+
+const Avatar =
+/* #__PURE__ */
+(function () {
   function Avatar(element) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    const options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     _classCallCheck(this, Avatar);
 
@@ -19,7 +71,7 @@ var Avatar = function () {
     }
 
     this.element = element;
-    this.settings = Object.assign({
+    this.settings = _objectSpread({
       useGravatar: true,
       allowGravatarFallback: false,
       initials: '',
@@ -43,11 +95,11 @@ var Avatar = function () {
         twitter: null,
         facebook: null,
         instagram: null,
-        size: 'medium'
-      }
+        size: 'medium',
+      },
     }, options);
+    let source = this.settings.fallbackImage;
 
-    var source = this.settings.fallbackImage;
     if (this.settings.useGravatar && this.settings.allowGravatarFallback) {
       source = Avatar.gravatarUrl(this.settings);
     } else if (this.settings.useGravatar) {
@@ -61,7 +113,6 @@ var Avatar = function () {
     }
 
     this.setSource(source);
-
     return this;
   }
 
@@ -71,29 +122,30 @@ var Avatar = function () {
       if (!this.element) {
         throw new Error('No image element set.');
       }
+
       if (source) {
         this.element.src = source;
       }
-    }
+    },
   }, {
     key: 'initialAvatar',
     value: function initialAvatar() {
-      var canvas = document.createElement('canvas');
-      var width = this.element.width || this.settings.size;
-      var height = this.element.height || this.settings.size;
-      var devicePixelRatio = Math.max(window.devicePixelRatio, 1);
+      const canvas = document.createElement('canvas');
+      const width = this.element.width || this.settings.size;
+      const height = this.element.height || this.settings.size;
+      const devicePixelRatio = Math.max(window.devicePixelRatio, 1);
       canvas.width = width * devicePixelRatio;
       canvas.height = height * devicePixelRatio;
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
+      canvas.style.width = ''.concat(width, 'px');
+      canvas.style.height = ''.concat(height, 'px');
+      const context = canvas.getContext('2d');
 
-      var context = canvas.getContext('2d');
       if (context) {
         context.scale(devicePixelRatio, devicePixelRatio);
         context.rect(0, 0, canvas.width, canvas.height);
         context.fillStyle = this.settings.initial_bg;
         context.fill();
-        context.font = this.settings.initial_weight + ' ' + (this.settings.initial_size || height / 2) + 'px ' + this.settings.initial_font_family;
+        context.font = ''.concat(this.settings.initial_weight, ' ').concat(this.settings.initial_size || height / 2, 'px ').concat(this.settings.initial_font_family);
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillStyle = this.settings.initial_fg;
@@ -101,30 +153,34 @@ var Avatar = function () {
       }
 
       return canvas.toDataURL('image/png') || 'data:';
-    }
+    },
   }, {
     key: 'gravatarValid',
     value: function gravatarValid() {
       if (!(this.settings.email || this.settings.hash)) {
         return;
       }
-      var image_source = void 0;
+
+      let image_source;
+
       if (this.settings.email) {
-        image_source = 'https://secure.gravatar.com/avatar/' + md5(this.settings.email) + '?d=404';
+        image_source = 'https://secure.gravatar.com/avatar/'.concat(md5(this.settings.email), '?d=404');
       }
+
       if (this.settings.hash) {
-        image_source = 'https://secure.gravatar.com/avatar/' + this.settings.hash + '?d=404';
+        image_source = 'https://secure.gravatar.com/avatar/'.concat(this.settings.hash, '?d=404');
       }
-      var image = new Image();
+
+      const image = new Image();
       image.onload = this.gravatarValidOnLoad.bind(this);
       image.onerror = this.gravatarValidOnError.bind(this);
       image.src = image_source;
-    }
+    },
   }, {
     key: 'gravatarValidOnLoad',
     value: function gravatarValidOnLoad() {
       this.setSource(Avatar.gravatarUrl(this.settings));
-    }
+    },
   }, {
     key: 'gravatarValidOnError',
     value: function gravatarValidOnError() {
@@ -132,62 +188,65 @@ var Avatar = function () {
         this.setSource(this.initialAvatar());
         return;
       }
+
       this.setSource(this.settings.fallbackImage);
-    }
+    },
   }], [{
     key: 'gravatarUrl',
     value: function gravatarUrl() {
-      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      const size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
+      let email_or_hash = settings.hash || settings.email;
 
-      var size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
-      var email_or_hash = settings.hash || settings.email;
       if (!email_or_hash || typeof email_or_hash !== 'string') {
         email_or_hash = '00000000000000000000000000000000';
       }
+
       email_or_hash = email_or_hash.toLowerCase().trim();
-
-      var hash = email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash;
-      var fallback = settings.fallback ? encodeURIComponent(settings.fallback) : 'mm';
-      var rating = settings.rating || 'x';
-      var forcedefault = settings.forcedefault ? '&f=y' : '';
-
-      return 'https://secure.gravatar.com/avatar/' + hash + '?s=' + size + '&d=' + fallback + '&r=' + rating + forcedefault;
-    }
+      const hash = email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash;
+      const fallback = settings.fallback ? encodeURIComponent(settings.fallback) : 'mm';
+      const rating = settings.rating || 'x';
+      const forcedefault = settings.forcedefault ? '&f=y' : '';
+      return 'https://secure.gravatar.com/avatar/'.concat(hash, '?s=').concat(size, '&d=').concat(fallback, '&r=').concat(rating)
+        .concat(forcedefault);
+    },
   }, {
     key: 'githubAvatar',
     value: function githubAvatar() {
-      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      var cdn_min = 0;
-      var cdn_max = 3;
-      var cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
-      return 'https://avatars' + cdn + '.githubusercontent.com/u/' + (settings.github_id || 0) + '?v=3&s=' + (settings.size || 80);
-    }
+      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      const cdn_min = 0;
+      const cdn_max = 3;
+      const cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
+      return 'https://avatars'.concat(cdn, '.githubusercontent.com/u/').concat(settings.github_id || 0, '?v=3&s=').concat(settings.size || 80);
+    },
   }, {
     key: 'avatarsioAvatar',
     value: function avatarsioAvatar() {
-      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      let avatars_io_url = 'https://avatars.io/';
 
-      var avatars_io_url = 'https://avatars.io/';
       if (!settings.avatars_io) {
         return avatars_io_url;
       }
       /* istanbul ignore else */
+
+
       if (settings.avatars_io.user_id && settings.avatars_io.identifier) {
-        avatars_io_url += settings.avatars_io.user_id + '/' + settings.avatars_io.identifier;
+        avatars_io_url += ''.concat(settings.avatars_io.user_id, '/').concat(settings.avatars_io.identifier);
       } else if (settings.avatars_io.twitter) {
-        avatars_io_url += 'twitter/' + settings.avatars_io.twitter;
+        avatars_io_url += 'twitter/'.concat(settings.avatars_io.twitter);
       } else if (settings.avatars_io.facebook) {
-        avatars_io_url += 'facebook/' + settings.avatars_io.facebook;
+        avatars_io_url += 'facebook/'.concat(settings.avatars_io.facebook);
       } else if (settings.avatars_io.instagram) {
-        avatars_io_url += 'instagram/' + settings.avatars_io.instagram;
+        avatars_io_url += 'instagram/'.concat(settings.avatars_io.instagram);
       }
-      avatars_io_url += '?size=' + settings.avatars_io.size;
+
+      avatars_io_url += '?size='.concat(settings.avatars_io.size);
       return avatars_io_url;
-    }
+    },
   }]);
 
   return Avatar;
-}();
+}());
 
 module.exports = Avatar;

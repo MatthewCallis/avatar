@@ -8,7 +8,7 @@ class Avatar {
     }
 
     this.element = element;
-    this.settings = Object.assign({
+    this.settings = {
       useGravatar: true,
       allowGravatarFallback: false,
       initials: '',
@@ -34,7 +34,8 @@ class Avatar {
         instagram: null,
         size: 'medium',
       },
-    }, options);
+      ...options,
+    };
 
     let source = this.settings.fallbackImage;
     if (this.settings.useGravatar && this.settings.allowGravatarFallback) {
