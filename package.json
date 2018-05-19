@@ -20,6 +20,8 @@
   "files": [
     "build/avatar.js"
   ],
+  "module": "src/avatar.js",
+  "jsnext:main": "src/avatar.js",
   "homepage": "http://matthewcallis.github.io/avatar/",
   "repository": {
     "type": "git",
@@ -38,33 +40,31 @@
     "md5": "^2.2.1"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
-    "babel-cli": "^6.24.1",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-es2016": "^6.24.1",
-    "babel-register": "^6.24.1",
+    "@babel/cli": "7.0.0-beta.44",
+    "@babel/core": "7.0.0-beta.44",
+    "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.44",
+    "@babel/polyfill": "7.0.0-beta.44",
+    "@babel/preset-env": "7.0.0-beta.44",
+    "ava": "^1.0.0-beta.4",
     "browser-env": "^3.2.5",
-    "canvas-prebuilt": "^1.6.5-prerelease.1",
-    "codeclimate-test-reporter": "^0.5.0",
-    "coveralls": "^3.0.0",
+    "canvas-prebuilt": "2.0.0-alpha.2",
+    "coveralls": "^3.0.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-no-inferred-method-name": "^1.0.2",
-    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-xss": "^0.1.9",
-    "leakage": "^0.3.0",
-    "nock": "^9.2.3",
+    "nock": "^9.2.5",
     "npm-bump": "^0.0.23",
-    "nyc": "^11.6.0",
+    "nyc": "^11.7.3",
     "precommit-hook-eslint": "^3.0.0",
-    "rollup": "^0.57.1",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-json": "^2.1.1",
-    "sinon": "^4.5.0"
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "4.0.0-beta.4",
+    "rollup-plugin-json": "^3.0.0",
+    "sinon": "^5.0.7"
   },
   "directories": {},
   "preferGlobal": false,
@@ -82,7 +82,7 @@
     "make-browser": "node rollup.config.browser.js",
     "report": "nyc report --reporter=html",
     "test-watch": "npm test -- --watch",
-    "test": "NODE_ENV=test nyc ava --serial",
+    "test": "NODE_ENV=test nyc ava",
     "validate": "npm ls"
   },
   "github": "https://github.com/MatthewCallis/avatar",
@@ -90,7 +90,7 @@
     "files": [
       "test/**/*.test.js"
     ],
-    "source": [
+    "sources": [
       "src/**/*.js"
     ],
     "concurrency": 5,
@@ -98,7 +98,6 @@
     "tap": false,
     "powerAssert": true,
     "require": [
-      "babel-register",
       "./test/setup-browser-env.js"
     ],
     "verbose": true
