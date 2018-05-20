@@ -99,7 +99,6 @@ test('#constructor should be able to set the settings', (t) => {
     size: 120,
     fallback: 'mm',
     rating: 'pg',
-    setSourceCallback: null,
     forcedefault: true,
     fallbackImage: 'nah',
     debug: false,
@@ -112,6 +111,7 @@ test('#constructor should be able to set the settings', (t) => {
       facebook: 4,
       instagram: 5,
     },
+    setSourceCallback: null,
     extra: () => true,
   };
   avatar = new Avatar(image, options);
@@ -138,6 +138,22 @@ test('#setSource should set the src attribute', (t) => {
 
   avatar.setSource();
   t.is(image.src, 'http://placekitten.com/200/300');
+});
+
+test.cb('#setSource should call setSourceCallback if provided', (t) => {
+  var _source = null;
+
+  avatar = new Avatar(image, {
+    setSourceCallback: function(source) {
+      _source = source;
+    }
+  });
+  avatar.setSource('data:image/png;');
+
+  setTimeout(() => {
+    t.is(_source, 'data:image/png;');
+    t.end();
+  }, gravatar_timeout);
 });
 
 test('#setSource should do nothing if there is no source provided', (t) => {
