@@ -65,7 +65,9 @@ Avatar is highly customizable and most options are self explanatory:
     facebook: null,      // Facebook ID or Username
     instagram: null,     // Instagram ID or Username
     size: 'medium',      // Size: small, medium, large
-  }
+  },
+
+  setSourceCallback: null, // Callback called when image source is set (useful to cache avatar sources provided by third parties such as Gravatar)
 }
 ```
 

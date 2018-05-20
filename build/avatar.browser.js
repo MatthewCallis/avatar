@@ -280,7 +280,8 @@ function () {
         facebook: null,
         instagram: null,
         size: 'medium'
-      }
+      },
+      setSourceCallback: null
     }, options);
     var source = this.settings.fallbackImage;
 
@@ -309,6 +310,10 @@ function () {
 
       if (source) {
         this.element.src = source;
+
+        if (this.settings.setSourceCallback && typeof this.settings.setSourceCallback === 'function') {
+          this.settings.setSourceCallback(source);
+        }
       }
     }
   }, {

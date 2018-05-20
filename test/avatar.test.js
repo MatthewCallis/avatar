@@ -99,6 +99,7 @@ test('#constructor should be able to set the settings', (t) => {
     size: 120,
     fallback: 'mm',
     rating: 'pg',
+    setSourceCallback: null,
     forcedefault: true,
     fallbackImage: 'nah',
     debug: false,

@@ -1,21 +1,21 @@
+'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-function _interopDefault(ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex.default : ex; }
-
-const md5 = _interopDefault(require('md5'));
+var md5 = _interopDefault(require('md5'));
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function');
+    throw new TypeError("Cannot call a class as a function");
   }
 }
 
 function _defineProperties(target, props) {
-  for (let i = 0; i < props.length; i++) {
-    const descriptor = props[i];
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
     descriptor.enumerable = descriptor.enumerable || false;
     descriptor.configurable = true;
-    if ('value' in descriptor) descriptor.writable = true;
+    if ("value" in descriptor) descriptor.writable = true;
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
@@ -29,10 +29,10 @@ function _createClass(Constructor, protoProps, staticProps) {
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
-      value,
+      value: value,
       enumerable: true,
       configurable: true,
-      writable: true,
+      writable: true
     });
   } else {
     obj[key] = value;
@@ -42,15 +42,17 @@ function _defineProperty(obj, key, value) {
 }
 
 function _objectSpread(target) {
-  for (let i = 1; i < arguments.length; i++) {
+  for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
-    let ownKeys = Object.keys(source);
-    /* istanbul ignore next */
+    var ownKeys = Object.keys(source);
+
     if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(sym => Object.getOwnPropertyDescriptor(source, sym).enumerable));
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+      }));
     }
 
-    ownKeys.forEach((key) => {
+    ownKeys.forEach(function (key) {
       _defineProperty(target, key, source[key]);
     });
   }
@@ -58,11 +60,11 @@ function _objectSpread(target) {
   return target;
 }
 
-const Avatar =
-/* #__PURE__ */
-(function () {
+var Avatar =
+/*#__PURE__*/
+function () {
   function Avatar(element) {
-    const options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     _classCallCheck(this, Avatar);
 
@@ -95,10 +97,11 @@ const Avatar =
         twitter: null,
         facebook: null,
         instagram: null,
-        size: 'medium',
+        size: 'medium'
       },
+      setSourceCallback: null
     }, options);
-    let source = this.settings.fallbackImage;
+    var source = this.settings.fallbackImage;
 
     if (this.settings.useGravatar && this.settings.allowGravatarFallback) {
       source = Avatar.gravatarUrl(this.settings);
@@ -117,7 +120,7 @@ const Avatar =
   }
 
   _createClass(Avatar, [{
-    key: 'setSource',
+    key: "setSource",
     value: function setSource(source) {
       if (!this.element) {
         throw new Error('No image element set.');
@@ -125,27 +128,31 @@ const Avatar =
 
       if (source) {
         this.element.src = source;
+
+        if (this.settings.setSourceCallback && typeof this.settings.setSourceCallback === 'function') {
+          this.settings.setSourceCallback(source);
+        }
       }
-    },
+    }
   }, {
-    key: 'initialAvatar',
+    key: "initialAvatar",
     value: function initialAvatar() {
-      const canvas = document.createElement('canvas');
-      const width = this.element.width || this.settings.size;
-      const height = this.element.height || this.settings.size;
-      const devicePixelRatio = Math.max(window.devicePixelRatio, 1);
+      var canvas = document.createElement('canvas');
+      var width = this.element.width || this.settings.size;
+      var height = this.element.height || this.settings.size;
+      var devicePixelRatio = Math.max(window.devicePixelRatio, 1);
       canvas.width = width * devicePixelRatio;
       canvas.height = height * devicePixelRatio;
-      canvas.style.width = ''.concat(width, 'px');
-      canvas.style.height = ''.concat(height, 'px');
-      const context = canvas.getContext('2d');
+      canvas.style.width = "".concat(width, "px");
+      canvas.style.height = "".concat(height, "px");
+      var context = canvas.getContext('2d');
 
       if (context) {
         context.scale(devicePixelRatio, devicePixelRatio);
         context.rect(0, 0, canvas.width, canvas.height);
         context.fillStyle = this.settings.initial_bg;
         context.fill();
-        context.font = ''.concat(this.settings.initial_weight, ' ').concat(this.settings.initial_size || height / 2, 'px ').concat(this.settings.initial_font_family);
+        context.font = "".concat(this.settings.initial_weight, " ").concat(this.settings.initial_size || height / 2, "px ").concat(this.settings.initial_font_family);
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillStyle = this.settings.initial_fg;
@@ -153,36 +160,36 @@ const Avatar =
       }
 
       return canvas.toDataURL('image/png') || 'data:';
-    },
+    }
   }, {
-    key: 'gravatarValid',
+    key: "gravatarValid",
     value: function gravatarValid() {
       if (!(this.settings.email || this.settings.hash)) {
         return;
       }
 
-      let image_source;
+      var image_source;
 
       if (this.settings.email) {
-        image_source = 'https://secure.gravatar.com/avatar/'.concat(md5(this.settings.email), '?d=404');
+        image_source = "https://secure.gravatar.com/avatar/".concat(md5(this.settings.email), "?d=404");
       }
 
       if (this.settings.hash) {
-        image_source = 'https://secure.gravatar.com/avatar/'.concat(this.settings.hash, '?d=404');
+        image_source = "https://secure.gravatar.com/avatar/".concat(this.settings.hash, "?d=404");
       }
 
-      const image = new Image();
+      var image = new Image();
       image.onload = this.gravatarValidOnLoad.bind(this);
       image.onerror = this.gravatarValidOnError.bind(this);
       image.src = image_source;
-    },
+    }
   }, {
-    key: 'gravatarValidOnLoad',
+    key: "gravatarValidOnLoad",
     value: function gravatarValidOnLoad() {
       this.setSource(Avatar.gravatarUrl(this.settings));
-    },
+    }
   }, {
-    key: 'gravatarValidOnError',
+    key: "gravatarValidOnError",
     value: function gravatarValidOnError() {
       if (this.settings.initials.length > 0) {
         this.setSource(this.initialAvatar());
@@ -190,40 +197,39 @@ const Avatar =
       }
 
       this.setSource(this.settings.fallbackImage);
-    },
+    }
   }], [{
-    key: 'gravatarUrl',
+    key: "gravatarUrl",
     value: function gravatarUrl() {
-      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      const size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
-      let email_or_hash = settings.hash || settings.email;
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var size = settings.size >= 1 && settings.size <= 2048 ? settings.size : 80;
+      var email_or_hash = settings.hash || settings.email;
 
       if (!email_or_hash || typeof email_or_hash !== 'string') {
         email_or_hash = '00000000000000000000000000000000';
       }
 
       email_or_hash = email_or_hash.toLowerCase().trim();
-      const hash = email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash;
-      const fallback = settings.fallback ? encodeURIComponent(settings.fallback) : 'mm';
-      const rating = settings.rating || 'x';
-      const forcedefault = settings.forcedefault ? '&f=y' : '';
-      return 'https://secure.gravatar.com/avatar/'.concat(hash, '?s=').concat(size, '&d=').concat(fallback, '&r=').concat(rating)
-        .concat(forcedefault);
-    },
+      var hash = email_or_hash.match(/@/g) !== null ? md5(email_or_hash) : email_or_hash;
+      var fallback = settings.fallback ? encodeURIComponent(settings.fallback) : 'mm';
+      var rating = settings.rating || 'x';
+      var forcedefault = settings.forcedefault ? '&f=y' : '';
+      return "https://secure.gravatar.com/avatar/".concat(hash, "?s=").concat(size, "&d=").concat(fallback, "&r=").concat(rating).concat(forcedefault);
+    }
   }, {
-    key: 'githubAvatar',
+    key: "githubAvatar",
     value: function githubAvatar() {
-      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      const cdn_min = 0;
-      const cdn_max = 3;
-      const cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
-      return 'https://avatars'.concat(cdn, '.githubusercontent.com/u/').concat(settings.github_id || 0, '?v=3&s=').concat(settings.size || 80);
-    },
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var cdn_min = 0;
+      var cdn_max = 3;
+      var cdn = Math.floor(Math.random() * (cdn_max - (cdn_min + 1))) + cdn_min;
+      return "https://avatars".concat(cdn, ".githubusercontent.com/u/").concat(settings.github_id || 0, "?v=3&s=").concat(settings.size || 80);
+    }
   }, {
-    key: 'avatarsioAvatar',
+    key: "avatarsioAvatar",
     value: function avatarsioAvatar() {
-      const settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      let avatars_io_url = 'https://avatars.io/';
+      var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var avatars_io_url = 'https://avatars.io/';
 
       if (!settings.avatars_io) {
         return avatars_io_url;
@@ -232,21 +238,21 @@ const Avatar =
 
 
       if (settings.avatars_io.user_id && settings.avatars_io.identifier) {
-        avatars_io_url += ''.concat(settings.avatars_io.user_id, '/').concat(settings.avatars_io.identifier);
+        avatars_io_url += "".concat(settings.avatars_io.user_id, "/").concat(settings.avatars_io.identifier);
       } else if (settings.avatars_io.twitter) {
-        avatars_io_url += 'twitter/'.concat(settings.avatars_io.twitter);
+        avatars_io_url += "twitter/".concat(settings.avatars_io.twitter);
       } else if (settings.avatars_io.facebook) {
-        avatars_io_url += 'facebook/'.concat(settings.avatars_io.facebook);
+        avatars_io_url += "facebook/".concat(settings.avatars_io.facebook);
       } else if (settings.avatars_io.instagram) {
-        avatars_io_url += 'instagram/'.concat(settings.avatars_io.instagram);
+        avatars_io_url += "instagram/".concat(settings.avatars_io.instagram);
       }
 
-      avatars_io_url += '?size='.concat(settings.avatars_io.size);
+      avatars_io_url += "?size=".concat(settings.avatars_io.size);
       return avatars_io_url;
-    },
+    }
   }]);
 
   return Avatar;
-}());
+}();
 
 module.exports = Avatar;
