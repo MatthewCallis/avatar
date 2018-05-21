@@ -5,7 +5,7 @@
 ## 4.0.0 (May 13th, 2018)
 
 * Update dependencies.
-* Use Babel 7 with `@babel/preset-env` targeting `last 2 versions", "ie 11"`
+* Use Babel 7 with `@babel/preset-env` targeting `"last 2 versions", "ie 11"`
 * Use Object Spread instead of `Object.assign`
 * Remove Leakages tests
 * Add `module` and `jsnext:main` to the `package.json`
