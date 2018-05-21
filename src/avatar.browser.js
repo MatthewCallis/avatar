@@ -34,6 +34,7 @@ class Avatar {
         instagram: null,
         size: 'medium',
       },
+      setSourceCallback: null,
       ...options,
     };
 
@@ -61,6 +62,9 @@ class Avatar {
     }
     if (source) {
       this.element.src = source;
+      if (this.settings.setSourceCallback && typeof this.settings.setSourceCallback === 'function') {
+        this.settings.setSourceCallback(source);
+      }
     }
   }
 
