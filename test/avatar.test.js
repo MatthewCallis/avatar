@@ -141,17 +141,17 @@ test('#setSource should set the src attribute', (t) => {
 });
 
 test.cb('#setSource should call setSourceCallback if provided', (t) => {
-  var _source = null;
+  let output;
 
   avatar = new Avatar(image, {
-    setSourceCallback: function(source) {
-      _source = source;
-    }
+    setSourceCallback(source) {
+      output = source;
+    },
   });
   avatar.setSource('data:image/png;');
 
   setTimeout(() => {
-    t.is(_source, 'data:image/png;');
+    t.is(output, 'data:image/png;');
     t.end();
   }, gravatar_timeout);
 });

@@ -1,3 +1,7 @@
+## 4.1.0 (May 21st, 2018)
+
+* Add support for `setSourceCallback`, called when image source is set. Useful to cache avatar sources provided by third parties such as Gravatar. [PR 20](https://github.com/MatthewCallis/avatar/pull/20)
+
 ## 4.0.0 (May 13th, 2018)
 
 * Update dependencies.

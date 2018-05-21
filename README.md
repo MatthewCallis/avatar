@@ -134,6 +134,7 @@ I build with the [Babel Env Preset](https://babeljs.io/docs/plugins/preset-env/)
 
 Pretty styles and design support kindly provided by [Andrew Crocker](https://twitter.com/andrewcrocker).
 Originally built with love at [Apptentive](https://github.com/apptentive).
+[Sun Knudsen](https://github.com/sunknudsen) for providing [a PR](https://github.com/MatthewCallis/avatar/pull/20) with `setSourceCallback`.
 
 ### Releasing
 
