@@ -1,4 +1,4 @@
-/* eslint no-bitwise: 0 */
+/* eslint-disable jsdoc/require-jsdoc */
 // http://www.myersdaily.org/joseph/javascript/md5.js
 // http://www.myersdaily.org/joseph/javascript/md5-text.html
 // http://www.myersdaily.org/joseph/javascript/md5-speed-test.html
@@ -135,9 +135,9 @@ function md51(s) {
   const state = [1732584193, -271733879, -1732584194, 271733878];
   let i;
   for (i = 64; i <= s.length; i += 64) {
-    md5cycle(state, md5blk(s.substring(i - 64, i)));
+    md5cycle(state, md5blk(s.slice(i - 64, i)));
   }
-  s = s.substring(i - 64);
+  s = s.slice(Math.max(0, i - 64));
   const tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (i = 0; i < s.length; i++) {
     tail[i >> 2] |= s.charCodeAt(i) << ((i % 4) << 3);
@@ -170,6 +170,6 @@ function hex(x) {
   return x.join('');
 }
 
-export default function md5(s) {
-  return hex(md51(s));
-}
+const md5 = (s) => hex(md51(s));
+
+module.exports = md5;

@@ -1,3 +1,11 @@
+## 5.0.0 (January 8th, 2021)
+
+* 7 years old 🎂!
+* Update dependencies (none, just for dev).
+* Support for ESM via `import`, CJS via `require`, and IIFE for browsers.
+* Make `initialAvatar` a static method
+* Clean up issues from age
+
 ## 4.1.0 (May 21st, 2018)
 
 * Add support for `setSourceCallback`, called when image source is set. Useful to cache avatar sources provided by third parties such as Gravatar. [PR 20](https://github.com/MatthewCallis/avatar/pull/20)

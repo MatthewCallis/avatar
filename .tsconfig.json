@@ -1,0 +1,23 @@
+{
+  "include": [
+    "src/avatar.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "test/**/*.js"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "extendedDiagnostics": true,
+    "moduleResolution": "node",
+    "noEmit": false,
+    "outFile": "types/index.d.ts",
+    "removeComments": true,
+    "strict": false,
+    "target": "esnext",
+    "skipLibCheck": true
+  }
+}

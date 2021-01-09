@@ -1,27 +1,24 @@
 /* eslint no-console: 0 */
 const { rollup } = require('rollup');
-const babel = require('rollup-plugin-babel');
-const json = require('rollup-plugin-json');
+const { babel } = require('@rollup/plugin-babel');
+const commonjs = require('@rollup/plugin-commonjs');
+const { terser } = require('rollup-plugin-terser');
 
 rollup({
   input: 'src/avatar.js',
   plugins: [
-    json({
-      exclude: ['node_modules/**'],
-    }),
-    babel({
-      exclude: 'node_modules/**',
-      // plugins: ['external-helpers'], // Only 1 class.
-    }),
+    commonjs(),
+    babel(),
+    terser(),
   ],
-}).then(bundle => (
+}).then((bundle) => (
   bundle.write({
-    format: 'cjs',
+    format: 'iife',
     name: 'Avatar',
-    file: 'build/avatar.js',
+    file: 'browser/avatar.js',
   })
 )).then(() => {
-  console.log('Node bundle created');
+  console.log('Bundle created');
 }).catch((e) => {
-  console.log(e);
+  console.error(e);
 });

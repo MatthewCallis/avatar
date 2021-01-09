@@ -1,18 +1,20 @@
 {
-  "plugins": [
-    "@babel/plugin-proposal-object-rest-spread"
-  ],
   "presets": [
     [
       "@babel/preset-env",
       {
         "targets": {
-          "browsers": ["last 2 versions", "ie 11"]
+          "browsers":  [
+            "last 1 version",
+            "not ie 11",
+            "not samsung 13",
+            "not dead"
+          ]
         },
         "modules": false,
-        "useBuiltIns": "entry",
-        "corejs": "3.0.0",
-        "debug": false
+        "debug": true,
+        "useBuiltIns": false,
+        "corejs": 3
       }
     ]
   ]
