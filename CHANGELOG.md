@@ -1,3 +1,8 @@
+## Next (June 9th, 2021)
+
+* Simplify GitHub Avatar URL
+* Convert fallback data URI to raw SVG to save ~400 bytes
+
 ## 5.0.0 (January 8th, 2021)
 
 * 7 years old 🎂!
