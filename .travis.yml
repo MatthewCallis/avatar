@@ -1,25 +1,27 @@
 language: node_js
 node_js:
-  - "10"
-  - "12"
-  - "14"
-cache:
-  directories:
-    - node_modules
-    - "$HOME/.npm"
-# addons:
-#   chrome: stable
+  - "16"
+  - "18"
+
 before_install:
   - npm config set spin false
 install:
   - npm ci
+
+cache:
+  directories:
+  - "$HOME/.npm"
+
 script:
+  - npm install -g coveralls
+  - npm run lint
+  - npm run validate --prod
   - npm run make
-  - npm test
-after_success:
-  - nyc report --reporter=text-lcov | ./node_modules/coveralls/bin/coveralls.js
+  - npm run test && nyc report --reporter=text-lcov | coveralls
+
 branches:
   only:
     - master
+
 notifications:
   email: false

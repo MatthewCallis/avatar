@@ -1,8 +1,14 @@
 /* eslint-disable ava/no-skip-test */
-const test = require('ava');
-const nock = require('nock');
-const sinon = require('sinon');
-const Avatar = require('../src/avatar');
+import { promisify } from 'node:util';
+import test from 'ava';
+import nock from 'nock';
+import sinon from 'sinon';
+import Avatar from '../esm/index.js';
+
+const withCallback = fn => async t => {
+  await promisify(fn)(t)
+  t.pass() // There must be at least one passing assertion for the test to pass
+};
 
 const initial = {
   initials: 'MC',
@@ -19,9 +25,9 @@ test.before(() => {
   nock.cleanAll();
 
   // Useful when adding new tests that make calls.
-  // nock.recorder.rec({
-  //   dont_print: true,
-  // });
+  nock.recorder.rec({
+    dont_print: true,
+  });
 
   const request = nock('https://secure.gravatar.com')
     .filteringRequestBody(() => '*')
@@ -142,7 +148,7 @@ test('#setSource should set the src attribute', (t) => {
   t.is(image.src, 'http://placekitten.com/200/300');
 });
 
-test.cb('#setSource should call setSourceCallback if provided', (t) => {
+test('#setSource should call setSourceCallback if provided', withCallback((t, end) => {
   let output;
 
   const image = document.querySelector('#avatar-1');
@@ -155,9 +161,9 @@ test.cb('#setSource should call setSourceCallback if provided', (t) => {
 
   setTimeout(() => {
     t.is(output, 'data:image/png;');
-    t.end();
+    end();
   }, gravatar_timeout);
-});
+}));
 
 test('#setSource should do nothing if there is no source provided', (t) => {
   const image = document.querySelector('#avatar-1');
@@ -181,7 +187,7 @@ test('Avatar.githubAvatar should return a GitHub Avatar URL via instance', (t) =
     github_id: 67945,
     size: 80,
   });
-  t.regex(avatar.element.src, /https:\/\/avatars[0-3].githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
+  t.regex(avatar.element.src, /https:\/\/avatars[0-3]?.githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
 });
 
 test('Avatar.githubAvatar should return a GitHub Avatar URL', (t) => {
@@ -189,12 +195,12 @@ test('Avatar.githubAvatar should return a GitHub Avatar URL', (t) => {
     github_id: 67945,
     size: 80,
   });
-  t.regex(github_url, /https:\/\/avatars[0-3].githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
+  t.regex(github_url, /https:\/\/avatars[0-3]?.githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
 });
 
 test('Avatar.githubAvatar should not throw an error with no settings', (t) => {
   const github_url = Avatar.githubAvatar();
-  t.regex(github_url, /https:\/\/avatars[0-3].githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
+  t.regex(github_url, /https:\/\/avatars[0-3]?.githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
 });
 
 test('Avatar.gravatarUrl should return a Gravatar URL as a static method', (t) => {
@@ -289,120 +295,116 @@ test('Avatar.gravatarUrl should return a Gravatar URL with a forced default', (t
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x&f=y');
 });
 
-test('#gravatarValid should not throw an error with an email', (t) => {
+test('#gravatarValid with an invalid Gravatar hash should return an error', async (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
     useGravatar: true,
-    email: 'test@test.test',
   });
-  const fn = () => {
+
+  const load_spy = sinon.spy();
+  const error_spy = sinon.spy();
+
+  await new Promise((resolve, reject) => {
+    sinon.stub(avatar, "gravatarValidOnLoad").callsFake(() => {
+      load_spy();
+      resolve();
+    });
+    sinon.stub(avatar, "gravatarValidOnError").callsFake(() => {
+      error_spy();
+      resolve();
+    });
+
+    // Called again after setting hash.
+    avatar.settings.hash = '00000000000000000000000000000000';
     avatar.gravatarValid();
-  };
-  t.notThrows(fn);
+  });
+
+  t.false(load_spy.called);
+  t.true(error_spy.called);
 });
 
-test('#gravatarValid should not throw an error with a hash', (t) => {
+test('#gravatarValid with a valid Gravatar hash should not return an error', async (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
     useGravatar: true,
-    hash: '00000000000000000000000000000000',
   });
-  const fn = () => {
+
+  const load_spy = sinon.spy();
+  const error_spy = sinon.spy();
+
+  await new Promise((resolve, reject) => {
+    sinon.stub(avatar, "gravatarValidOnLoad").callsFake(() => {
+      load_spy();
+      resolve();
+    });
+    sinon.stub(avatar, "gravatarValidOnError").callsFake(() => {
+      error_spy();
+      resolve();
+    });
+
+    // Called again after setting hash.
+    avatar.settings.hash = '12929016fffb0b3af98bc440acf0bfe2';
     avatar.gravatarValid();
-  };
-  t.notThrows(fn);
+  });
+
+  t.true(load_spy.called);
+  t.false(error_spy.called);
 });
 
-test.cb.skip('#gravatarValid with an invalid Gravatar hash should return an error', (t) => {
-  t.plan(3);
-
+test('#gravatarValid with an invalid Gravatar email should return an error', async (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
     useGravatar: true,
-    hash: '00000000000000000000000000000000',
   });
-  const call_spy = sinon.spy(avatar, 'gravatarValid');
-  const load_spy = sinon.spy(avatar, 'gravatarValidOnLoad');
-  const error_spy = sinon.spy(avatar, 'gravatarValidOnError');
 
-  avatar.gravatarValid();
+  const load_spy = sinon.spy();
+  const error_spy = sinon.spy();
 
-  setTimeout(() => {
-    t.true(call_spy.called);
-    t.true(load_spy.notCalled);
-    t.true(error_spy.called);
+  await new Promise((resolve, reject) => {
+    sinon.stub(avatar, "gravatarValidOnLoad").callsFake(() => {
+      load_spy();
+      resolve();
+    });
+    sinon.stub(avatar, "gravatarValidOnError").callsFake(() => {
+      error_spy();
+      resolve();
+    });
 
-    t.end();
-  }, gravatar_timeout);
+    // Called again after setting email.
+    avatar.settings.email = 'test@test.com';
+    avatar.gravatarValid();
+  });
+
+  t.false(load_spy.called);
+  t.true(error_spy.called);
 });
 
-test.cb.skip('#gravatarValid with a valid Gravatar hash should not return an error', (t) => {
-  t.plan(3);
-
+test('#gravatarValid with a valid Gravatar email should not return an error', async (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
     useGravatar: true,
-    hash: '12929016fffb0b3af98bc440acf0bfe2',
   });
-  const call_spy = sinon.spy(avatar, 'gravatarValid');
-  const load_spy = sinon.spy(avatar, 'gravatarValidOnLoad');
-  const error_spy = sinon.spy(avatar, 'gravatarValidOnError');
 
-  avatar.gravatarValid();
+  const load_spy = sinon.spy();
+  const error_spy = sinon.spy();
 
-  setTimeout(() => {
-    t.true(call_spy.called);
-    t.true(load_spy.called);
-    t.true(error_spy.notCalled);
+  await new Promise((resolve, reject) => {
+    sinon.stub(avatar, "gravatarValidOnLoad").callsFake(() => {
+      load_spy();
+      resolve();
+    });
+    sinon.stub(avatar, "gravatarValidOnError").callsFake(() => {
+      error_spy();
+      resolve();
+    });
 
-    t.end();
-  }, gravatar_timeout);
-});
-
-test.cb.skip('#gravatarValid with an invalid Gravatar email should return an error', (t) => {
-  t.plan(3);
-
-  const image = document.querySelector('#avatar-1');
-  const avatar = new Avatar(image, {
-    useGravatar: true,
-    email: 'test@test.com',
+    // Called again after setting email.
+    avatar.settings.email = 'matthew@apptentive.com';
+    avatar.gravatarValid();
   });
-  const call_spy = sinon.spy(avatar, 'gravatarValid');
-  const load_spy = sinon.spy(avatar, 'gravatarValidOnLoad');
-  const error_spy = sinon.spy(avatar, 'gravatarValidOnError');
 
-  avatar.gravatarValid();
-
-  setTimeout(() => {
-    t.true(call_spy.called);
-    t.true(load_spy.notCalled);
-    t.true(error_spy.called);
-
-    t.end();
-  }, gravatar_timeout);
-});
-
-test.cb.skip('#gravatarValid with a valid Gravatar email should not return an error', (t) => {
-  t.plan(3);
-
-  const image = document.querySelector('#avatar-1');
-  const avatar = new Avatar(image, {
-    useGravatar: true,
-    email: 'matthew@apptentive.com',
-  });
-  const call_spy = sinon.spy(avatar, 'gravatarValid');
-  const load_spy = sinon.spy(avatar, 'gravatarValidOnLoad');
-  const error_spy = sinon.spy(avatar, 'gravatarValidOnError');
-
-  avatar.gravatarValid();
-
-  setTimeout(() => {
-    t.true(call_spy.called);
-    t.true(load_spy.called);
-    t.true(error_spy.notCalled);
-
-    t.end();
-  }, gravatar_timeout);
+  t.true(load_spy.called);
+  t.false(error_spy.called);
 });
 
 test('#gravatarValidOnLoad should call gravatarUrl with settings', (t) => {

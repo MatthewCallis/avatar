@@ -2,7 +2,7 @@ declare module "md5" {
     export = md5;
     function md5(s: any): any;
 }
-declare module "avatar" {
+declare module "avatar-initials" {
     export = Avatar;
     class Avatar {
         static from(element: HTMLImageElement, options: object): Avatar;
@@ -16,16 +16,16 @@ declare module "avatar" {
             initial_font_family: string;
         }): string;
         static gravatarUrl(settings?: {
-            size: number;
-            email: string;
-            hash: string;
-            fallback: string;
-            rating: string;
-            forcedefault: boolean;
+            size?: number;
+            email?: string;
+            hash?: string;
+            fallback?: string;
+            rating?: string;
+            forcedefault?: boolean;
         }): string;
         static githubAvatar(settings?: {
-            github_id: number | string;
-            size: number;
+            github_id?: number | string;
+            size?: number;
         }): string;
         constructor(element: HTMLImageElement, options?: object);
         element: HTMLImageElement;

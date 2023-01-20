@@ -1,7 +1,10 @@
-## Next (June 9th, 2021)
+## 5.0.1 (January 19th, 2023)
 
+* 9 years old 🎂!
 * Simplify GitHub Avatar URL
 * Convert fallback data URI to raw SVG to save ~400 bytes
+* Update dependencies
+* Fix types for <https://github.com/MatthewCallis/avatar/issues/44>
 
 ## 5.0.0 (January 8th, 2021)
 

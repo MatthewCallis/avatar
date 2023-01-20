@@ -13,7 +13,6 @@ class Avatar {
    *
    * @param {HTMLImageElement} element The image node to target.
    * @param {object} [options={}] Settings
-   * @returns {Avatar} The new instance
    * @class
    */
   constructor(element, options = {}) {
@@ -55,8 +54,6 @@ class Avatar {
     }
 
     this.setSource(source);
-
-    return this;
   }
 
   /**
@@ -88,6 +85,11 @@ class Avatar {
     }
   }
 
+  /**
+   * Attempts to create an image node with a Gravatar URL using the existing settings.
+   *
+   * @memberof Avatar
+   */
   gravatarValid() {
     if (!this.settings.email && !this.settings.hash) {
       return;
@@ -165,7 +167,7 @@ class Avatar {
    * @memberof Avatar
    */
   static gravatarUrl(settings = {}) {
-    const size = (settings.size >= 1 && settings.size <= 2048 ? settings.size : 80);
+    const size = settings.size && (settings.size >= 1 && settings.size <= 2048) ? settings.size : 80;
     let email_or_hash = settings.hash || settings.email;
     if (!email_or_hash || typeof email_or_hash !== 'string') {
       email_or_hash = '00000000000000000000000000000000';

@@ -1,4 +1,4 @@
-/* eslint-disable jsdoc/require-jsdoc */
+/* eslint-disable no-bitwise, jsdoc/require-jsdoc */
 // http://www.myersdaily.org/joseph/javascript/md5.js
 // http://www.myersdaily.org/joseph/javascript/md5-text.html
 // http://www.myersdaily.org/joseph/javascript/md5-speed-test.html

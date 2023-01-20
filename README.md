@@ -1,7 +1,6 @@
 [![view on npm](https://img.shields.io/npm/v/avatar-initials.svg)](https://www.npmjs.org/package/avatar-initials)
 [![npm module downloads](https://img.shields.io/npm/dt/avatar-initials.svg)](https://www.npmjs.org/package/avatar-initials)
 [![Build Status](https://travis-ci.com/MatthewCallis/avatar.svg?branch=master)](https://travis-ci.com/MatthewCallis/avatar)
-[![Dependency Status](https://david-dm.org/MatthewCallis/avatar.svg)](https://david-dm.org/MatthewCallis/avatar)
 [![Coverage Status](https://coveralls.io/repos/github/MatthewCallis/avatar/badge.svg?branch=master)](https://coveralls.io/github/MatthewCallis/avatar?branch=master)
 [![Tree-Shaking Support](https://badgen.net/bundlephobia/tree-shaking/avatar-initials)](https://bundlephobia.com/result?p=avatar-initials)
 [![Dependency Count](https://badgen.net/bundlephobia/dependency-count/avatar-initials)](https://bundlephobia.com/result?p=avatar-initials)
@@ -98,9 +97,22 @@ or copy the minified build from `browser/`
 <script src="browser/avatar.js"></script>
 ```
 
-### jQuery Support
+The browser build is built with the following `@babel/preset-env` targets:
 
-I haven't used jQuery in a long time and don't need it personally, so if you still use it the old helper is below.
+```json
+{
+  "android": "109",
+  "chrome": "109",
+  "edge": "109",
+  "firefox": "109",
+  "ios": "16.2",
+  "opera": "92",
+  "safari": "16.2",
+  "samsung": "19"
+}
+```
+
+### jQuery Support
 
 ```javascript
 if (typeof jQuery !== 'undefined') {
@@ -118,7 +130,6 @@ if (typeof jQuery !== 'undefined') {
 ## Thanks
 
 Pretty styles and design support kindly provided by [Andrew Crocker](https://twitter.com/andrewcrocker).
-Originally built with love at [Apptentive](https://github.com/apptentive).
 [Sun Knudsen](https://github.com/sunknudsen) for providing [a PR](https://github.com/MatthewCallis/avatar/pull/20) with `setSourceCallback`.
 
 ### License

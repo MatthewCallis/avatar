@@ -2,68 +2,89 @@
   "extends": [
     "airbnb",
     "plugin:ava/recommended",
+    "plugin:import/recommended",
     "plugin:jsdoc/recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:node/recommended",
     "plugin:optimize-regex/all",
-    "plugin:security/recommended",
-    "plugin:unicorn/recommended"
+    "plugin:ramda/recommended",
+    "plugin:security/recommended"
   ],
   "plugins": [
+    "anti-trojan-source",
     "ava",
+    "import",
     "jsdoc",
+    "jsx-a11y",
     "no-inferred-method-name",
     "node",
     "optimize-regex",
+    "ramda",
     "security",
-    "unicorn",
     "xss"
   ],
   "env": {
-    "es6": true,
     "browser": true,
-    "mocha": true
+    "node": true
   },
-  "globals": {},
+  "globals": {
+    "sinon": false,
+    "expect": true
+  },
   "parserOptions": {
-    "ecmaVersion": 2021
+    "ecmaVersion": 2022,
+    "requireConfigFile": false
   },
   "rules": {
+    "anti-trojan-source/no-bidi": "error",
+    "ava/no-only-test": 0,
+    "camelcase": 0,
+    "consistent-return": ["warn", { "treatUndefinedAsUnspecified": false }],
+    "import/no-dynamic-require": 0,
     "import/no-extraneous-dependencies": [
       "error", {
         "devDependencies": ["**/*.test.js", "**/test/**/*.js"],
         "optionalDependencies": true,
-        "peerDependencies": false
+        "peerDependencies": true
       }
     ],
-    "ava/no-only-test": 0,
-    "camelcase": 0,
-    "class-methods-use-this": 0,
-    "consistent-return": ["warn", { "treatUndefinedAsUnspecified": false }],
-    "global-require": 0,
-    "import/no-dynamic-require": 0,
-    "max-classes-per-file": 0,
+    "import/no-unresolved": 0,
     "max-len": 0,
-    "no-bitwise": 0,
     "no-empty": ["error", { "allowEmptyCatch": true }],
     "no-inferred-method-name/no-inferred-method-name": "error",
     "no-param-reassign": 0,
     "no-plusplus": 0,
-    "no-restricted-syntax": 0,
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "ForInStatement",
+        "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
+      },
+      {
+        "selector": "LabeledStatement",
+        "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
+      },
+      {
+        "selector": "WithStatement",
+        "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
+      }
+    ],
     "no-underscore-dangle": 0,
     "no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_", "caughtErrors": "none" }],
+    "node/no-missing-require": 0,
     "node/no-unpublished-require": 0,
     "object-curly-newline": 0,
     "optimize-regex/optimize-regex": "warn",
     "security/detect-non-literal-fs-filename": 0,
     "security/detect-non-literal-require": 0,
-    "security/detect-object-injection": 0,
-    "unicorn/catch-error-name": 0,
-    "unicorn/filename-case": 0,
-    "unicorn/no-for-loop": 0,
-    "unicorn/no-fn-reference-in-iterator": 0,
-    "unicorn/no-null": 0,
-    "unicorn/no-reduce": 0,
-    "unicorn/no-useless-undefined": 0,
-    "unicorn/prevent-abbreviations": 0
+    "security/detect-object-injection": 0
+  },
+  "settings": {
+    "jsdoc": {
+      "mode": "typescript"
+    },
+    "react": {
+      "version": "detect"
+    }
   }
 }

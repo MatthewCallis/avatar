@@ -1,5 +1,5 @@
 // @ts-nocheck
-const JSDOM = require('jsdom');
+import JSDOM from 'jsdom';
 
 const jsdom = new JSDOM.JSDOM('<!doctype html><html><body></body></html>', {
   url: 'http://sfc.fm/',
@@ -7,6 +7,7 @@ const jsdom = new JSDOM.JSDOM('<!doctype html><html><body></body></html>', {
   contentType: 'text/html',
   includeNodeLocations: true,
   storageQuota: 10000000,
+  resources: 'usable',
 });
 const { window } = jsdom;
 
