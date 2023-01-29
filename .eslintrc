@@ -7,7 +7,6 @@
     "plugin:jsx-a11y/recommended",
     "plugin:node/recommended",
     "plugin:optimize-regex/all",
-    "plugin:ramda/recommended",
     "plugin:security/recommended"
   ],
   "plugins": [
@@ -16,10 +15,8 @@
     "import",
     "jsdoc",
     "jsx-a11y",
-    "no-inferred-method-name",
     "node",
     "optimize-regex",
-    "ramda",
     "security",
     "xss"
   ],
@@ -51,7 +48,6 @@
     "import/no-unresolved": 0,
     "max-len": 0,
     "no-empty": ["error", { "allowEmptyCatch": true }],
-    "no-inferred-method-name/no-inferred-method-name": "error",
     "no-param-reassign": 0,
     "no-plusplus": 0,
     "no-restricted-syntax": [

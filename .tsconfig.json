@@ -1,6 +1,7 @@
 {
   "include": [
-    "src/avatar.js"
+    "src/avatar.js",
+    "esm/AvatarComponent.js"
   ],
   "exclude": [
     "node_modules",
@@ -10,12 +11,13 @@
     "allowJs": true,
     "checkJs": false,
     "declaration": true,
+    "declarationMap": true,
     "emitDeclarationOnly": true,
     "extendedDiagnostics": true,
     "moduleResolution": "node",
     "noEmit": false,
     "outFile": "types/index.d.ts",
-    "removeComments": true,
+    "removeComments": false,
     "strict": false,
     "target": "esnext",
     "skipLibCheck": true

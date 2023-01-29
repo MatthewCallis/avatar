@@ -9,7 +9,7 @@
 
 # [Avatar](http://matthewcallis.github.io/avatar/)
 
-Avatar is a JavaScript library for showing [Gravatars](https://en.gravatar.com/) or generating user avatars.
+Avatar is a JavaScript library & React component for showing [Gravatars](https://en.gravatar.com/) or generating user avatars.
 
 ## Examples
 
@@ -18,7 +18,7 @@ There are several examples [on the website](http://matthewcallis.github.io/avata
 ```js
 import Avatar from 'avatar-initials';
 // or
-const Avatar = require('avatar-initials')
+const Avatar = require('avatar-initials');
 
 // Add an avatar to an <img>
 const avatar = Avatar.from(document.getElementById('avatar'), {
@@ -53,35 +53,68 @@ This example will render an avatar with my initials "MC" as the image.
 
 ![Avatar Example](https://raw.githubusercontent.com/MatthewCallis/avatar/master/example.png)
 
+A simple React example:
+
+```jsx
+import { AvatarComponent } from 'avatar-initials';
+
+export default function Example() {
+  // ...
+  return (
+    <div className={`w-full flex self-center items-center justify-between relative ${classes}`}>
+      <button type="button" onClick={() => setShowMenu(true)} title="Open Menu">
+        <AvatarComponent
+          classes="rounded-full"
+          useGravatar={false}
+          size={44}
+          primarySource={currentUser.Avatar}
+          color="#000000"
+          background="#f1f1f1"
+          fontSize={16}
+          fontWeight={400}
+          offsetY={24}
+          initials={`${currentUser.FirstName[0]}${currentUser.LastName[0]}`}
+        />
+      </button>
+    </div>
+  );
+}
+```
+
 ### Options
 
 Avatar is highly customizable and most options are self explanatory:
 
 ```js
 {
-  useGravatar: true,       // Allow Gravatars or not.
-  fallbackImage: '',       // URL or Data URI used when no initials are provided and not using Gravatars.
-  size: 80,                // Size in pixels, fallback for hidden images and Gravatar
-  setSourceCallback: null, // Callback called when image source is set (useful to cache avatar sources provided by third parties such as Gravatar)
+  primarySource: '',           // A source image to be used by default before attempting any other sources.
+  fallbackImage: '',           // URL or Data URI used when no initials are provided and not using Gravatars.
+  size: 80,                    // Size in pixels, fallback for hidden images and Gravatar
+  setSourceCallback: () => {}, // Callback called when image source is set (useful to cache avatar sources provided by third parties such as Gravatar)
 
   // Initial Avatars Specific
-  initials: '',          // Initials to be used.
-  initial_fg: '#888888', // Text Color
-  initial_bg: '#f4f6f7', // Background Color
-  initial_size: 0,       // Text Size in pixels
-  initial_weight: 100,   // Font weight (numeric value for light, bold, etc.)
-  initial_font_family: "'Lato', 'Lato-Regular', 'Helvetica Neue'",
+  initials: '',          // Initials to be used
+  color: '#888888',      // Text Color
+  background: '#f4f6f7', // Background Color
+  fontSize: 0,           // Text Size in pixels
+  fontWeight: 100,       // Font weight (numeric value for light, bold, etc.)
+  fontFamily: "'Lato', 'Lato-Regular', 'Helvetica Neue'",
+  offsetX: undefined,    // Text X position in pixels, defaults to: width / 2
+  offsetY: undefined,    // Text Y position in pixels, defaults to: height / 2
+  width: undefined,      // The width of the output image, size is used it not provided
+  height: undefined,     // The height of the output image, size is used if not provided
 
   // Gravatar Specific
+  useGravatar: true,            // Allow Gravatars as source
+  useGravatarFallback: false,   // Use Gravatars fallback, not fallbackImage
   hash: '',                     // Precalculated MD5 string of an email address
   email: '',                    // Email used for the Gravatar
   fallback: 'mm',               // Fallback Type
   rating: 'x',                  // Gravatar Rating
   forcedefault: false,          // Force Gravatar Defaults
-  allowGravatarFallback: false, // Use Gravatars fallback, not fallbackImage
 
   // GitHub Specific
-  github_id: null,  // GitHub User ID.
+  githubId: null,  // GitHub User ID.
 }
 ```
 
@@ -112,19 +145,32 @@ The browser build is built with the following `@babel/preset-env` targets:
 }
 ```
 
-### jQuery Support
+### jQuery Wrapper for Avatar
 
 ```javascript
 if (typeof jQuery !== 'undefined') {
   jQuery.fn.avatar = function avatar(options) {
     return this.each(() => {
-      /* istanbul ignore else */
       if (!jQuery.data(this, 'plugin_avatar')) {
         jQuery.data(this, 'plugin_avatar', new Avatar(this, options));
       }
     });
   };
 }
+```
+
+## Migrating to v6
+
+The settings have changed keys and some new logic was introduced, the logic should not interefere but the keys will need to be updated:
+
+```md
+  initial_fg            => color
+  initial_bg            => background
+  initial_size          => fontSize
+  initial_weight        => fontWeight
+  initial_font_family   => fontFamily
+  allowGravatarFallback => useGravatarFallback
+  github_id             => github_id
 ```
 
 ## Thanks
