@@ -1,3 +1,20 @@
+## 6.0.0 (January 24th, 2023)
+
+* Added a React component, this does not currently support non-Gravatar fallbacks when using Gravatar.
+* Added `primarySource` setting to provide a default to be used unless missing.
+* Added offset support to Initials.
+* Added custom sizing to Initials.
+* Updated types with descriptions from JSDoc.
+* Move from nyc to c8 for coverage.
+* BREAKING CHANGE: Updated the following setting keys:
+  `initial_fg            => color`
+  `initial_bg            => background`
+  `initial_size          => fontSize`
+  `initial_weight        => fontWeight`
+  `initial_font_family   => fontFamily`
+  `allowGravatarFallback => useGravatarFallback`
+  `github_id             => github_id`
+
 ## 5.0.1 (January 19th, 2023)
 
 * 9 years old 🎂!

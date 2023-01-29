@@ -5,18 +5,18 @@ import nock from 'nock';
 import sinon from 'sinon';
 import Avatar from '../esm/index.js';
 
-const withCallback = fn => async t => {
-  await promisify(fn)(t)
-  t.pass() // There must be at least one passing assertion for the test to pass
+const withCallback = (fn) => async (t) => {
+  await promisify(fn)(t);
+  t.pass(); // There must be at least one passing assertion for the test to pass
 };
 
 const initial = {
   initials: 'MC',
-  initial_fg: '#888888',
-  initial_bg: '#f4f6f7',
-  initial_size: 0,
-  initial_weight: 100,
-  initial_font_family: "'Lato', 'Lato-Regular', 'Helvetica Neue'",
+  color: '#888888',
+  background: '#f4f6f7',
+  fontSize: 0,
+  fontWeight: 100,
+  fontFamily: "'Lato', 'Lato-Regular', 'Helvetica Neue'",
 };
 const gravatar_timeout = 1600;
 
@@ -83,10 +83,10 @@ test('#constructor should allow Gravatar fallbacks', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
     useGravatar: true,
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
   });
   t.true(avatar.settings.useGravatar);
-  t.true(avatar.settings.allowGravatarFallback);
+  t.true(avatar.settings.useGravatarFallback);
 });
 
 test('#constructor should render a canvas', (t) => {
@@ -99,27 +99,40 @@ test('#constructor should render a canvas', (t) => {
   t.not(avatar.settings.useGravatar, 'MC');
 });
 
+test('#constructor should allow primarySource to be used', (t) => {
+  const image = document.querySelector('#avatar-1');
+  const avatar = new Avatar(image, {
+    primarySource: 'yay',
+  });
+  t.is(avatar.element.src, 'http://sfc.fm/yay');
+});
+
 test('#constructor should be able to set the settings', (t) => {
   const options = {
-    useGravatar: false,
-    allowGravatarFallback: true,
-    initials: 'MDC',
-    initial_fg: '#111',
-    initial_bg: '#222',
-    initial_size: 1,
-    initial_weight: 2,
-    initial_font_family: 'Comic Sans',
-    hash: '00000000000000000000000000000000',
-    email: 'matthew@apptentive.com',
-    size: 120,
-    fallback: 'mm',
-    rating: 'pg',
-    forcedefault: true,
-    fallbackImage: 'nah',
+    background: '#222',
+    color: '#111',
     debug: false,
-    github_id: 1,
-    setSourceCallback: () => {},
+    email: 'matthew@apptentive.com',
     extra: () => true,
+    fallback: 'mm',
+    fallbackImage: 'nah',
+    fontFamily: 'Comic Sans',
+    fontSize: 1,
+    fontWeight: 2,
+    forcedefault: true,
+    githubId: 1,
+    hash: '00000000000000000000000000000000',
+    height: undefined,
+    initials: 'MDC',
+    offsetX: undefined,
+    offsetY: undefined,
+    primarySource: '',
+    rating: 'pg',
+    setSourceCallback: () => {},
+    size: 120,
+    useGravatar: false,
+    useGravatarFallback: true,
+    width: undefined,
   };
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, options);
@@ -180,11 +193,21 @@ test('Avatar.initialAvatar should return a PNG', (t) => {
   t.regex(png, /^data:/); // /^data:image\/png;base64,iV/
 });
 
+test('Avatar.initialAvatar should return a PNG with width & height', (t) => {
+  const png = Avatar.initialAvatar({ ...initial, width: 90, height: 30 });
+  t.regex(png, /^data:/); // /^data:image\/png;base64,iV/
+});
+
+test('Avatar.initialAvatar should return a PNG with offsetX & offsetY', (t) => {
+  const png = Avatar.initialAvatar({ ...initial, offsetX: 1, offsetY: 2 });
+  t.regex(png, /^data:/); // /^data:image\/png;base64,iV/
+});
+
 test('Avatar.githubAvatar should return a GitHub Avatar URL via instance', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
     useGravatar: false,
-    github_id: 67945,
+    githubId: 67945,
     size: 80,
   });
   t.regex(avatar.element.src, /https:\/\/avatars[0-3]?.githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
@@ -192,26 +215,37 @@ test('Avatar.githubAvatar should return a GitHub Avatar URL via instance', (t) =
 
 test('Avatar.githubAvatar should return a GitHub Avatar URL', (t) => {
   const github_url = Avatar.githubAvatar({
-    github_id: 67945,
+    githubId: 67945,
     size: 80,
   });
   t.regex(github_url, /https:\/\/avatars[0-3]?.githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
 });
 
 test('Avatar.githubAvatar should not throw an error with no settings', (t) => {
-  const github_url = Avatar.githubAvatar();
+  const github_url = Avatar.githubAvatar({});
   t.regex(github_url, /https:\/\/avatars[0-3]?.githubusercontent.com\/u\/\d+\?s=\d{1,4}&v=4/i);
 });
 
 test('Avatar.gravatarUrl should return a Gravatar URL as a static method', (t) => {
-  const url = Avatar.gravatarUrl();
+  const url = Avatar.gravatarUrl({});
   t.is(url, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
+});
+
+test('Avatar.gravatarUrl should return a Gravatar URL with a custom settings', (t) => {
+  t.is(
+    Avatar.gravatarUrl({ fallback: 'wow ok', rating: 'g', forcedefault: true }),
+    'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=wow%20ok&r=g&f=y',
+  );
+  t.is(
+    Avatar.gravatarUrl({ fallback: '', rating: '', forcedefault: '' }),
+    'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x',
+  );
 });
 
 test('Avatar.gravatarUrl should return a Gravatar URL with an email address', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     email: 'test@test.com',
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
@@ -220,7 +254,7 @@ test('Avatar.gravatarUrl should return a Gravatar URL with an email address', (t
 test('Avatar.gravatarUrl should return a Gravatar URL with an hash', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     hash: 'b642b4217b34b1e8d3bd915fc65c4452',
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=80&d=mm&r=x');
@@ -228,14 +262,14 @@ test('Avatar.gravatarUrl should return a Gravatar URL with an hash', (t) => {
 
 test('Avatar.gravatarUrl should return a Gravatar URL with nothing', (t) => {
   const image = document.querySelector('#avatar-1');
-  const avatar = new Avatar(image, { allowGravatarFallback: true });
+  const avatar = new Avatar(image, { useGravatarFallback: true });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
 });
 
 test('Avatar.gravatarUrl should return a Gravatar URL with a custom size', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     size: 100,
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
@@ -244,7 +278,7 @@ test('Avatar.gravatarUrl should return a Gravatar URL with a custom size', (t) =
 test('Avatar.gravatarUrl should return a Gravatar URL with a custom size (string)', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     size: '100',
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=100&d=mm&r=x');
@@ -253,7 +287,7 @@ test('Avatar.gravatarUrl should return a Gravatar URL with a custom size (string
 test('Avatar.gravatarUrl should return a Gravatar URL with a minimum size of 80px', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     size: 0,
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
@@ -262,16 +296,16 @@ test('Avatar.gravatarUrl should return a Gravatar URL with a minimum size of 80p
 test('Avatar.gravatarUrl should return a Gravatar URL with a maximum size of 2048px', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     size: 4000,
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x');
 });
 
-test('Avatar.gravatarUrl should return a Gravatar URL with a custom fallback', (t) => {
+test('Avatar.gravatarUrl should return a Gravatar URL with a custom fallback (class)', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     fallback: 'test',
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=test&r=x');
@@ -280,7 +314,7 @@ test('Avatar.gravatarUrl should return a Gravatar URL with a custom fallback', (
 test('Avatar.gravatarUrl should return a Gravatar URL with a custom rating', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     rating: 'g',
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=g');
@@ -289,7 +323,7 @@ test('Avatar.gravatarUrl should return a Gravatar URL with a custom rating', (t)
 test('Avatar.gravatarUrl should return a Gravatar URL with a forced default', (t) => {
   const image = document.querySelector('#avatar-1');
   const avatar = new Avatar(image, {
-    allowGravatarFallback: true,
+    useGravatarFallback: true,
     forcedefault: true,
   });
   t.is(avatar.element.src, 'https://secure.gravatar.com/avatar/00000000000000000000000000000000?s=80&d=mm&r=x&f=y');
@@ -305,11 +339,11 @@ test('#gravatarValid with an invalid Gravatar hash should return an error', asyn
   const error_spy = sinon.spy();
 
   await new Promise((resolve, reject) => {
-    sinon.stub(avatar, "gravatarValidOnLoad").callsFake(() => {
+    sinon.stub(avatar, 'gravatarValidOnLoad').callsFake(() => {
       load_spy();
       resolve();
     });
-    sinon.stub(avatar, "gravatarValidOnError").callsFake(() => {
+    sinon.stub(avatar, 'gravatarValidOnError').callsFake(() => {
       error_spy();
       resolve();
     });
@@ -333,11 +367,11 @@ test('#gravatarValid with a valid Gravatar hash should not return an error', asy
   const error_spy = sinon.spy();
 
   await new Promise((resolve, reject) => {
-    sinon.stub(avatar, "gravatarValidOnLoad").callsFake(() => {
+    sinon.stub(avatar, 'gravatarValidOnLoad').callsFake(() => {
       load_spy();
       resolve();
     });
-    sinon.stub(avatar, "gravatarValidOnError").callsFake(() => {
+    sinon.stub(avatar, 'gravatarValidOnError').callsFake(() => {
       error_spy();
       resolve();
     });
@@ -361,11 +395,11 @@ test('#gravatarValid with an invalid Gravatar email should return an error', asy
   const error_spy = sinon.spy();
 
   await new Promise((resolve, reject) => {
-    sinon.stub(avatar, "gravatarValidOnLoad").callsFake(() => {
+    sinon.stub(avatar, 'gravatarValidOnLoad').callsFake(() => {
       load_spy();
       resolve();
     });
-    sinon.stub(avatar, "gravatarValidOnError").callsFake(() => {
+    sinon.stub(avatar, 'gravatarValidOnError').callsFake(() => {
       error_spy();
       resolve();
     });
@@ -389,11 +423,11 @@ test('#gravatarValid with a valid Gravatar email should not return an error', as
   const error_spy = sinon.spy();
 
   await new Promise((resolve, reject) => {
-    sinon.stub(avatar, "gravatarValidOnLoad").callsFake(() => {
+    sinon.stub(avatar, 'gravatarValidOnLoad').callsFake(() => {
       load_spy();
       resolve();
     });
-    sinon.stub(avatar, "gravatarValidOnError").callsFake(() => {
+    sinon.stub(avatar, 'gravatarValidOnError').callsFake(() => {
       error_spy();
       resolve();
     });
@@ -458,8 +492,8 @@ test('Issue #5 should build the image data for a hidden image', (t) => {
   Avatar.from(image, {
     useGravatar: false,
     initials: 'f',
-    initial_bg: '#FF5C45',
-    initial_fg: 'white',
+    background: '#FF5C45',
+    color: 'white',
     size: 80,
   });
   t.not(image.src.length, 0);

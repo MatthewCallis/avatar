@@ -18,7 +18,26 @@ rollup({
     file: 'browser/avatar.js',
   })
 )).then(() => {
-  console.log('Bundle created');
+  console.log('Avatar created');
+}).catch((e) => {
+  console.error(e);
+});
+
+rollup({
+  input: 'esm/AvatarComponent.js',
+  plugins: [
+    commonjs(),
+    babel(),
+    terser(),
+  ],
+}).then((bundle) => (
+  bundle.write({
+    format: 'iife',
+    name: 'AvatarComponent',
+    file: 'browser/AvatarComponent.js',
+  })
+)).then(() => {
+  console.log('AvatarComponent created');
 }).catch((e) => {
   console.error(e);
 });

@@ -26,6 +26,12 @@
     "src/*",
     "types/*"
   ],
+  "exports": {
+    ".": {
+      "require": "./src/avatar.js",
+      "import": "./esm/index.js"
+    }
+  },
   "homepage": "http://matthewcallis.github.io/avatar/",
   "repository": {
     "type": "git",
@@ -43,38 +49,42 @@
   "engines": {
     "node": ">= 12"
   },
+  "optionalDependencies": {
+    "@types/react": "^18",
+    "react": "^18",
+    "react-dom": "^18"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
     "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^24.0.0",
-    "@rollup/plugin-terser": "^0.3.0",
-    "@typescript-eslint/parser": "^5.48.2",
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-terser": "^0.4.0",
+    "@typescript-eslint/parser": "^5.49.0",
     "ava": "^5.1.1",
-    "browser-env": "^2.0.21",
+    "browser-env": "^3.3.0",
+    "c8": "^7.12.0",
     "canvas": "^2.11.0",
     "core-js": "^3.27.2",
-    "eslint": "^8.32.0",
+    "eslint": "^8.33.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-anti-trojan-source": "^1.1.1",
     "eslint-plugin-ava": "^14.0.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsdoc": "^39.6.7",
+    "eslint-plugin-jsdoc": "^39.7.4",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-no-inferred-method-name": "^2.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.1",
-    "eslint-plugin-ramda": "^2.5.1",
-    "eslint-plugin-react": "^7.32.1",
+    "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-security": "^1.6.0",
+    "eslint-plugin-security": "^1.7.0",
     "eslint-plugin-xss": "^0.1.12",
-    "jsdom": "^21.0.0",
+    "jsdom": "^21.1.0",
     "nock": "^13.3.0",
-    "nyc": "^15.1.0",
     "precommit-hook-eslint": "^3.0.0",
     "release-it": "^15.6.0",
-    "rollup": "^3.10.0",
+    "rollup": "^3.12.0",
     "sinon": "^15.0.1",
+    "ts-jest": "^29.0.5",
     "typescript": "^4.9.4"
   },
   "directories": {},
@@ -92,20 +102,15 @@
     "make": "node rollup.config.js",
     "make-types": "rm -fr types/ && mkdir types && tsc --project .tsconfig.json",
     "release": "release-it",
-    "report": "nyc report --reporter=html",
-    "test-watch": "npm test -- --watch",
-    "test": "NODE_ENV=test nyc ava",
+    "test": "NODE_ENV=test c8 ava",
     "validate": "npm ls"
   },
   "ava": {
     "files": [
       "test/**/*.test.mjs"
     ],
-    "ignoredByWatcher": [
-      "!src/**/*.js"
-    ],
     "cache": false,
-    "concurrency": 5,
+    "concurrency": 1,
     "failFast": false,
     "tap": false,
     "timeout": "1m",
@@ -114,12 +119,13 @@
       "./test/setup-browser-env.mjs"
     ]
   },
-  "nyc": {
-    "cache": true,
+  "c8": {
+    "cache": false,
     "all": true,
     "check-coverage": false,
     "include": [
-      "src/avatar.js"
+      "src/avatar.js",
+      "esm/AvatarComponent.js"
     ]
   },
   "release-it": {
